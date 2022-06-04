@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "231185121746",
+    "project_id": "pigeonlineandroidapp",
+    "storage_bucket": "pigeonlineandroidapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:231185121746:android:ab4a98f9973e9372e2880b",
+        "android_client_info": {
+          "package_name": "com.example.pigeonlineandroidapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "231185121746-r02mo1mm80c884ig40peadmp5sansjk1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA06T-voSy9bbUOgvWQMAMdtPSf4_iXRNw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "231185121746-r02mo1mm80c884ig40peadmp5sansjk1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

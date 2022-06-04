@@ -16,5 +16,6 @@ public class MainActivity extends AppCompatActivity {
                 MainActivity.this, instanceIdResult -> {
                    String token = instanceIdResult.getToken();
                 });
+
     }
 }

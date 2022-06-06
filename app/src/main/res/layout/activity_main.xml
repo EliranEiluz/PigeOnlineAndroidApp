@@ -29,6 +29,18 @@
             android:fontFamily="sans-serif"
             android:textStyle="bold"
             android:textColor="@color/envelope_color"/>
+        <TextView
+            android:id="@+id/main_warning_message"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:text="@string/warning"
+            android:layout_marginBottom="20dp"
+            android:textSize="17sp"
+            android:fontFamily="sans-serif"
+            android:textStyle="bold"
+            android:visibility="invisible"
+            android:textColor="@color/warning_red"/>
+
 
         <EditText
             android:id="@+id/main_username"

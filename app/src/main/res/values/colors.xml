@@ -11,4 +11,5 @@
     <color name="end_color">#7B7BAC</color>
     <color name="envelope_color">#169E62</color>
     <color name="background_logo_color">#E3E4F6</color>
+    <color name="warning_red">#FF0F0F</color>
 </resources>

@@ -5,6 +5,8 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.pigeonlineandroidapp.viewModels.ContactsViewModel;
@@ -14,7 +16,7 @@ public class ContactsActivity extends AppCompatActivity {
 
     private ContactsViewModel contactsViewModel;
     private String username;
-    private ListView lv;
+    private ListView contactsListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,9 +26,26 @@ public class ContactsActivity extends AppCompatActivity {
         this.username = intent.getExtras().getString("username");
         this.contactsViewModel = new ViewModelProvider(this, new ContactsViewModelFactory
                 (this.username, getApplicationContext())).get(ContactsViewModel.class);
-        this.lv = findViewById(R.id.contacts_chatsList);
+        this.contactsListView = findViewById(R.id.contacts_chatsList);
         final ContactsAdapter contactsAdapter = new ContactsAdapter(getApplicationContext(), contactsViewModel.get().getValue());
-        lv.setAdapter(contactsAdapter);
-        //this.contactsViewModel.get().observe(this, );
+        contactsListView.setAdapter(contactsAdapter);
+
+        contactsListView.setClickable(true);
+        contactsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
+                //intent.putExtra("currentUsername", username);
+                //intent.putExtra("contactUsername", contactsAdapter.getItem(position).getChatWith());
+                //intent.putExtra("contactDisplayName", contactsAdapter.getItem(position).getDisplayName());
+                //intent.putExtra("chatId", contactsAdapter.getItem(position).getId());
+                //startActivity(intent);
+            }
+        });
+
+        this.contactsViewModel.get().observe(this, contacts -> {
+            contactsAdapter.setData(contacts);
+            //contactsAdapter.notifyDataSetChanged();
+        });
     }
 }

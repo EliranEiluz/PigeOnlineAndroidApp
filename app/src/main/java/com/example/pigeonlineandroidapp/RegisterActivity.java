@@ -61,10 +61,10 @@ public class RegisterActivity extends AppCompatActivity {
             }
 
             // Check Img.
-
-            //Intent intent = new Intent(this, contactsActivity.class);
-            // put extra
-            //startActivity(intent);
+            // *** validate with server if username already exist. ***
+            Intent intent = new Intent(this, ContactsActivity.class);
+            intent.putExtra("username", userName.getText().toString());
+            startActivity(intent);
 
         });
 

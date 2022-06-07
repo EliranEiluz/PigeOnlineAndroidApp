@@ -31,9 +31,10 @@ public class MainActivity extends AppCompatActivity {
             EditText userName = findViewById(R.id.main_username);
             EditText password = findViewById(R.id.main_password);
             if(!userName.getText().toString().equals("") && !password.getText().toString().equals("")) {
-                // validate with server  username and password, put extra to intent the username and move to chat page.
-                //Intent intent = new Intent(this, contactsActivity.class);
-                //startActivity(intent);
+                // *** validate with server  username and password. ***
+                Intent intent = new Intent(this, ContactsActivity.class);
+                intent.putExtra("username", userName.getText().toString());
+                startActivity(intent);
                 return;
             }
             else {

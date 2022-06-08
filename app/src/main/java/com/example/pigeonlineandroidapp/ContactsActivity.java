@@ -34,12 +34,12 @@ public class ContactsActivity extends AppCompatActivity {
         contactsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
-                //intent.putExtra("currentUsername", username);
-                //intent.putExtra("contactUsername", contactsAdapter.getItem(position).getChatWith());
-                //intent.putExtra("contactDisplayName", contactsAdapter.getItem(position).getDisplayName());
-                //intent.putExtra("chatId", contactsAdapter.getItem(position).getId());
-                //startActivity(intent);
+                Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
+                intent.putExtra("currentUsername", username);
+                intent.putExtra("contactUsername", contactsAdapter.getItem(position).getChatWith());
+                intent.putExtra("contactDisplayName", contactsAdapter.getItem(position).getDisplayName());
+                intent.putExtra("chatId", contactsAdapter.getItem(position).getId());
+                startActivity(intent);
             }
         });
 

@@ -17,6 +17,10 @@ public class Message {
 
     private String date;
 
+    private int senderPicture;
+
+    private int chatOwnerId;
+
     public int getId() {
         return id;
     }
@@ -65,12 +69,7 @@ public class Message {
         this.chatOwnerId = chatOwnerId;
     }
 
-    private int senderPicture;
-
-    private int chatOwnerId;
-
-    public Message(int id, String from, String content, String date, int chatOwnerId) {
-        this.id = id;
+    public Message(String from, String content, String date, int chatOwnerId) {
         this.from = from;
         this.content = content;
         this.date = date;

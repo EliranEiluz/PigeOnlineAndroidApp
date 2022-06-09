@@ -16,8 +16,6 @@ public class Chat {
 
     private String chatWith;
 
-    private List<Message> messages;
-
     private String lastMessage;
 
     private String date;
@@ -38,14 +36,6 @@ public class Chat {
 
     public void setChatWith(String chatWith) {
         this.chatWith = chatWith;
-    }
-
-    public List<Message> getMessages() {
-        return messages;
-    }
-
-    public void setMessages(List<Message> messages) {
-        this.messages = messages;
     }
 
     public String getLastMessage() {
@@ -106,7 +96,6 @@ public class Chat {
         this.chatWith = chatWith;
         this.lastMessage = "";
         this.date = "";
-        this.messages = new ArrayList<>();
         this.displayName = displayName;
         this.serverURL = serverURL;
         this.image = R.drawable.im3;

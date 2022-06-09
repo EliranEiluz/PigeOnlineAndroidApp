@@ -35,11 +35,13 @@ public class AddContactActivity extends AppCompatActivity {
             Intent intentLst = getIntent();
             ArrayList<String> identifiersLst =  (ArrayList<String>) intentLst.
                     getSerializableExtra("identifiers_list");
-            for (String contact_usr : identifiersLst) {
-                if (contact_usr.equals(identifier.getText().toString())) {
-                    warningMessage.setText("You already have this contact.");
-                    warningMessage.setVisibility(View.VISIBLE);
-                    return;
+            if(identifiersLst != null) {
+                for (String contact_usr : identifiersLst) {
+                    if (contact_usr.equals(identifier.getText().toString())) {
+                        warningMessage.setText("You already have this contact.");
+                        warningMessage.setVisibility(View.VISIBLE);
+                        return;
+                    }
                 }
             }
 

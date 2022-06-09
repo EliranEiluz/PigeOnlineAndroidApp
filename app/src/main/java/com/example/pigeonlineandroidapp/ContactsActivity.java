@@ -25,6 +25,7 @@ public class ContactsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        System.out.println("onCreate CONTACTS");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contacts);
         Intent intent = getIntent();
@@ -33,9 +34,9 @@ public class ContactsActivity extends AppCompatActivity {
         this.contactsViewModel = new ViewModelProvider(this, new ContactsViewModelFactory
                 (this.username, getApplicationContext())).get(ContactsViewModel.class);
         this.contactsListView = findViewById(R.id.contacts_chatsList);
-        List<Chat> chats = contactsViewModel.get().getValue();
+        List<Chat> chats = this.contactsViewModel.get().getValue();
         final ContactsAdapter contactsAdapter = new ContactsAdapter(getApplicationContext(), chats);
-        contactsListView.setAdapter(contactsAdapter);
+        this.contactsListView.setAdapter(contactsAdapter);
 
         Button addBtn = findViewById(R.id.contacts_btn);
         addBtn.setOnClickListener(item -> {

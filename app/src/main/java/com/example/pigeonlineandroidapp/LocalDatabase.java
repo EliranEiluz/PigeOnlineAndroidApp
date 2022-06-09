@@ -21,7 +21,7 @@ public abstract class LocalDatabase extends RoomDatabase {
     public static LocalDatabase getInstance(Context context) {
         if(localdb == null) {
             localdb = Room.databaseBuilder(context, LocalDatabase.class,
-                    "PigeOnlineDB").build();
+                    "PigeOnlineDB").allowMainThreadQueries().build();
         }
         return localdb;
     }

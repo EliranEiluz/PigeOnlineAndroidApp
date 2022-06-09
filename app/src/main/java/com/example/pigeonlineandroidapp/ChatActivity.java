@@ -1,6 +1,7 @@
 package com.example.pigeonlineandroidapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,7 +10,20 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.pigeonlineandroidapp.entities.Chat;
+import com.example.pigeonlineandroidapp.entities.Message;
+import com.example.pigeonlineandroidapp.viewModels.ContactsViewModel;
+import com.example.pigeonlineandroidapp.viewModels.ContactsViewModelFactory;
+import com.example.pigeonlineandroidapp.viewModels.MessagesViewModel;
+import com.example.pigeonlineandroidapp.viewModels.MessagesViewModelFactory;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
 public class ChatActivity extends AppCompatActivity {
+    private MessagesViewModel messagesViewModel;
+    private ListView messagesLV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,14 +39,35 @@ public class ChatActivity extends AppCompatActivity {
         TextView displayNameTV = findViewById(R.id.chat_displayName);
         displayNameTV.setText(contactDisplayName);
 
-        ListView messagesLV = findViewById(R.id.chat_messagesList);
+        this.messagesViewModel = new ViewModelProvider(this, new MessagesViewModelFactory
+                (chatID, getApplicationContext())).get(MessagesViewModel.class);
+
+        this.messagesLV = findViewById(R.id.chat_messagesList);
+        List<Message> messages = this.messagesViewModel.get().getValue();
+        final MessagesAdapter messagesAdapter = new MessagesAdapter(getApplicationContext(),
+                messages, currentUsername);
+        this.messagesLV.setAdapter(messagesAdapter);
+
         Button sendBtn = findViewById(R.id.send_button);
         EditText messageEt = findViewById(R.id.message_input);
         sendBtn.setOnClickListener(item -> {
             if (messageEt.getText().toString().equals("")) {
                 return;
             }
-            // send.
+
+            // send
+            // add on server.
+            Date date = new Date();
+            SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+            this.messagesViewModel.add(new Message(currentUsername,
+                    messageEt.getText().toString(),
+                    formatter.format(date), chatID));
+
+        });
+
+        this.messagesViewModel.get().observe(this, allMessages -> {
+            messagesAdapter.setData(allMessages);
+            //messagesAdapter.notifyDataSetChanged();
         });
 
     }

@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        System.out.println("onCreate LOGIN");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -35,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(this, ContactsActivity.class);
                 intent.putExtra("username", userName.getText().toString());
                 startActivity(intent);
-                return;
             }
             else {
                 TextView warningMessage = findViewById(R.id.main_warning_message);

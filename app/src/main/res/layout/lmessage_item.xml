@@ -13,7 +13,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 android:padding="10dp"
-                android:background="@drawable/message_border">
+                android:background="@drawable/lmessage_border">
             </TextView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

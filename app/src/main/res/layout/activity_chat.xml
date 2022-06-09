@@ -45,7 +45,7 @@
             android:id="@+id/chat_messagesList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:listitem="@layout/message_item"
+            tools:listitem="@layout/lmessage_item"
             android:divider="@android:color/transparent"
             android:dividerHeight="10.0sp">
         </ListView>

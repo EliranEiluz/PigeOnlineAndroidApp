@@ -19,19 +19,19 @@ import java.util.List;
 
 public class ContactsAdapter extends ArrayAdapter<Chat> {
     LayoutInflater inflater;
-    List<Chat> chatsList;
+    //List<Chat> chatsList;
 
     public ContactsAdapter(Context context, List<Chat> chats) {
         super(context, R.layout.contact_item, chats);
-        this.chatsList = chats;
+        //this.chatsList = chats;
         this.inflater = LayoutInflater.from(context);
     }
 
     public void setData(List<Chat> chats) {
-        this.chatsList.clear();
-        this.chatsList.addAll(chats);
-        //super.clear();
-        //super.addAll(chats);
+        //this.chatsList.clear();
+        //this.chatsList.addAll(chats);
+        super.clear();
+        super.addAll(chats);
         notifyDataSetChanged();
     }
 

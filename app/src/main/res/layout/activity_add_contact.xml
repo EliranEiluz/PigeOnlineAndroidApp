@@ -22,6 +22,17 @@
             app:srcCompat="@drawable/add_contact_im"
             android:layout_marginBottom="50dp"/>
 
+        <TextView
+            android:id="@+id/contact_warning_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:textSize="17sp"
+            android:fontFamily="sans-serif"
+            android:textStyle="bold"
+            android:visibility="invisible"
+            android:textColor="@color/warning_red"/>
+
         <EditText
             android:id="@+id/contact_identifier"
             android:layout_width="match_parent"

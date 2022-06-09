@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/background_color"
     tools:context=".ContactsActivity">
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -16,6 +16,18 @@
             android:layout_height="match_parent"
             tools:listitem="@layout/contact_item">
         </ListView>
-    </LinearLayout>
+
+        <Button
+            android:id="@+id/contacts_btn"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@mipmap/add_contact_button_icon" />
+
+    </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

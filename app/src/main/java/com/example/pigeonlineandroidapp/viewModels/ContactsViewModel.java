@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel;
 import com.example.pigeonlineandroidapp.entities.Chat;
 import com.example.pigeonlineandroidapp.repos.ContactsRepository;
 import java.util.List;
+import java.util.Objects;
 
 public class ContactsViewModel extends ViewModel {
     private ContactsRepository repository;
@@ -19,8 +20,8 @@ public class ContactsViewModel extends ViewModel {
         return this.chats;
     }
 
-    public void add(Chat chat) {
-        repository.add(chat);
+    public boolean add(String from, String to, String server, String displayName) {
+       return repository.add(from, to, server, displayName);
     }
 
 }

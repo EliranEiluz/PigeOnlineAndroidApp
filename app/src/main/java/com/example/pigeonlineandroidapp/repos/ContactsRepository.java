@@ -37,6 +37,9 @@ public class ContactsRepository {
     }
 
     public LiveData<List<Chat>> getAll() {
+        if(chatListData.getValue() == null) {
+            chatListData.setValue(new ArrayList<>());
+        }
         return chatListData;
     }
 

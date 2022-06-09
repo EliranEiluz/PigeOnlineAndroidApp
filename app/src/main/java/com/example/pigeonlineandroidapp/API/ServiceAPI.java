@@ -22,7 +22,7 @@ public interface ServiceAPI {
     Call<User> Login(@Body UserValidation userValidation);
 
     @POST("api/Users")
-    Call<User> postUser(User user);
+    Call<String> postUser(@Body User user);
 
     @GET("api/contacts/{id}/messages")
     Call<List<Message>> getMessages(@Path("id") String id);
@@ -31,9 +31,9 @@ public interface ServiceAPI {
     Call<Void> postMessage(@Path("id") String id, @Body MessageContent messageContent);
 
     @POST("api/transfer")
-    Call<Void> transfer(TransferParams transferParams);
+    Call<Void> transfer(@Body TransferParams transferParams);
 
     @POST("api/invitations")
-    Call<Void> getInvitation(InvitationParams invitationParams);
+    Call<Void> getInvitation(@Body InvitationParams invitationParams);
 
 }

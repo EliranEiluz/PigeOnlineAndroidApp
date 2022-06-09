@@ -1,8 +1,13 @@
 package com.example.pigeonlineandroidapp.API;
 
+import android.app.Activity;
 import android.content.Context;
+import android.os.AsyncTask;
+import android.util.Log;
 
+import com.example.pigeonlineandroidapp.MainActivity;
 import com.example.pigeonlineandroidapp.R;
+import com.example.pigeonlineandroidapp.RegisterActivity;
 import com.example.pigeonlineandroidapp.entities.User;
 
 import retrofit2.Call;
@@ -14,53 +19,45 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class UserAPI {
     private Retrofit retrofit;
     private ServiceAPI serviceAPI;
-    private String token;
 
     public UserAPI(Context context) {
         this.retrofit = new Retrofit.Builder().baseUrl(context.getString(R.string.BaseUrl)).
                 addConverterFactory(GsonConverterFactory.create()).build();
         this.serviceAPI = retrofit.create(ServiceAPI.class);
-        this.token = null;
     }
 
-    public String postUser(User user) {
-        Call<User> postUserCall = serviceAPI.postUser(user);
-        postUserCall.enqueue(new Callback<User>() {
+    public void postUser(User user, RegisterActivity registerActivity) {
+        Call<String> postUserCall = serviceAPI.postUser(user);
+        Log.i("tag", postUserCall.request().toString());
+        postUserCall.enqueue(new Callback<String>() {
             @Override
-            public void onResponse(Call<User> call, Response<User> response) {
-                if(response.code() == 200) {
-                    User user = response.body();
-                    token = user.getUsername();
-                }
+            public void onResponse(Call<String> call, Response<String> response) {
+                registerActivity.handleRegisterResponse(response.code(), response.body(), user.getUsername());
             }
 
             @Override
-            public void onFailure(Call<User> call, Throwable t) {
-
+            public void onFailure(Call<String> call, Throwable t) {
+                registerActivity.handleRegisterResponse(0, null, null);
             }
         });
-        return token;
     }
 
-    public String Login(String username, String password) {
+    public void Login(String username, String password, MainActivity mainActivity) {
         UserValidation userValidation = new UserValidation();
         userValidation.setUsername(username);
         userValidation.setPassword(password);
         Call<User> loginCall = serviceAPI.Login(userValidation);
+        Log.i("tag", loginCall.request().toString());
         loginCall.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
-                if(response.code() == 200) {
-                    User user = response.body();
-                    token = user.getUsername();
-                }
+                mainActivity.handleLoginResponse(response.body(), response.code(), username);
             }
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
-
+                mainActivity.handleLoginResponse(null, 0, null);
             }
         });
-        return token;
     }
 }

@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.pigeonlineandroidapp.API.UserAPI;
+import com.example.pigeonlineandroidapp.entities.User;
 import com.google.firebase.iid.FirebaseInstanceId;
 
 public class MainActivity extends AppCompatActivity {
@@ -37,13 +38,7 @@ public class MainActivity extends AppCompatActivity {
             EditText userName = findViewById(R.id.main_username);
             EditText password = findViewById(R.id.main_password);
             if(!userName.getText().toString().equals("") && !password.getText().toString().equals("")) {
-                this.token = this.userAPI.Login(userName.getText().toString(), password.getText().toString());
-                if(this.token != null) {
-                    Intent intent = new Intent(this, ContactsActivity.class);
-                    intent.putExtra("username", userName.getText().toString());
-                    intent.putExtra("token", this.token);
-                    startActivity(intent);
-                }
+                this.userAPI.Login(userName.getText().toString(), password.getText().toString(), this);
             }
             else {
                 TextView warningMessage = findViewById(R.id.main_warning_message);
@@ -60,6 +55,28 @@ public class MainActivity extends AppCompatActivity {
                    String token = instanceIdResult.getToken();
                 });
          */
+    }
+
+    public void handleLoginResponse(User user, int responseCode, String userName) {
+        if(responseCode == 200) {
+            this.token = user.getUsername();
+        }
+        else {
+            this.token = null;
+        }
+        if(this.token != null) {
+            Intent intent = new Intent(this, ContactsActivity.class);
+            intent.putExtra("username", userName);
+            intent.putExtra("token", this.token);
+            startActivity(intent);
+        }
+        else {
+            TextView warningMessage = findViewById(R.id.main_warning_message);
+            warningMessage.setVisibility(View.VISIBLE);
+            ViewGroup.LayoutParams params = warningMessage.getLayoutParams();
+            params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+            warningMessage.setLayoutParams(params);
+        }
     }
 
 }

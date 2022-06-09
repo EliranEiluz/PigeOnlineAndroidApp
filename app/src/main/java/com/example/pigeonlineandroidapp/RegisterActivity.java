@@ -11,18 +11,19 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.pigeonlineandroidapp.API.UserAPI;
+import com.example.pigeonlineandroidapp.entities.User;
 
 import java.util.regex.Pattern;
 
 public class RegisterActivity extends AppCompatActivity {
     private UserAPI userAPI;
-    private String token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         System.out.println("onCreate REGISTER");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        this.userAPI = new UserAPI(this.getApplicationContext());
         Button loginBtn = findViewById(R.id.register_login_btn);
         loginBtn.setOnClickListener(view -> {
             Intent intent = new Intent(this, MainActivity.class);
@@ -64,12 +65,15 @@ public class RegisterActivity extends AppCompatActivity {
                 warningMessage.setText("The displayName field cannot be empty.");
                 return;
             }
-
+            User user = new User();
+            user.setUsername(userName.getText().toString());
+            user.setPassword(password.getText().toString());
+            user.setDisplayName(displayName.getText().toString());
+            user.setImage("");
+            //user.setServerURL("");
+            this.userAPI.postUser(user, this);
             // Check Img.
-            // *** validate with server if username already exist. ***
-            Intent intent = new Intent(this, ContactsActivity.class);
-            intent.putExtra("username", userName.getText().toString());
-            startActivity(intent);
+
 
         });
 
@@ -81,6 +85,23 @@ public class RegisterActivity extends AppCompatActivity {
                 });
          */
 
+    }
+
+    public void handleRegisterResponse(int responseCode, String token, String username) {
+        if(responseCode == 200) {
+            Intent intent = new Intent(this, ContactsActivity.class);
+            intent.putExtra("username", username);
+            intent.putExtra("token", token);
+            startActivity(intent);
+        }
+        else {
+            TextView warningMessage = findViewById(R.id.register_warning_message);
+            ViewGroup.LayoutParams params = warningMessage.getLayoutParams();
+            params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+            warningMessage.setLayoutParams(params);
+            warningMessage.setVisibility(View.VISIBLE);
+            warningMessage.setText("Sorry, this username is already taken.");
+        }
     }
 
 }

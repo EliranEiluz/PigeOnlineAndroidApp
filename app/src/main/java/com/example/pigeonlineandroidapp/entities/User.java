@@ -16,34 +16,17 @@ public class User {
 
     private String password;
 
+    private String image;
+
     private String displayName;
 
-    private int picture;
 
-    private List<Chat> chats;
+    //private List<Chat> chats;
 
-    private String serverURL;
+    //private String serverURL;
 
-    public User(String username, String password, String displayName, String serverURL) {
-        this.username = username;
-        this.password = password;
-        this.displayName = displayName;
-        this.picture = R.drawable.im3;;
-        this.serverURL = serverURL;
-        this.chats = new ArrayList<>();
-    }
-
-    public User(String username, String password, String displayName) {
-        this.username = username;
-        this.password = password;
-        this.displayName = displayName;
-        this.picture = R.drawable.im3;
-        this.serverURL = "http://localhost:5010";
-        this.chats = new ArrayList<>();
-    }
-
-    public String getServerURL() {
-        return serverURL;
+    public String getUsername() {
+        return username;
     }
 
     public void setUsername(String username) {
@@ -66,27 +49,33 @@ public class User {
         this.displayName = displayName;
     }
 
-    public int getPicture() {
-        return picture;
+    public String getImage() {
+        return image;
     }
 
-    public void setPicture(int picture) {
-        this.picture = picture;
+    public void setImage(String image) {
+        this.image = image;
     }
 
-    public List<Chat> getChats() {
-        return chats;
+    //public List<Chat> getChats() {
+        //return chats;
+    //}
+
+    //public void setChats(List<Chat> chats) {
+      //  this.chats = chats;
+    //}
+
+    //public String getServerURL() {
+      //  return serverURL;
+    //}
+
+    //public void setServerURL(String serverURL) {
+       // this.serverURL = serverURL;
+    //}
+
+
+
+    public User() {
     }
 
-    public void setChats(List<Chat> chats) {
-        this.chats = chats;
-    }
-
-    public void setServerURL(String serverURL) {
-        this.serverURL = serverURL;
-    }
-
-    public String getUsername() {
-        return username;
-    }
 }

@@ -14,9 +14,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ChatsAPI {
 
     private ServiceAPI serviceAPI;
-    ChatsDao chatsDao;
-    Retrofit retrofit;
-    boolean isValid;
+    private ChatsDao chatsDao;
+    private Retrofit retrofit;
+    private boolean isValid;
+    private String token;
+
 
     public ChatsAPI(Context context, ChatsDao chatsDao) {
         this.retrofit = new Retrofit.Builder().baseUrl(context.getString(R.string.BaseUrl)).
@@ -46,7 +48,10 @@ public class ChatsAPI {
         invitationParams.setTo(to);
         invitationParams.setFrom(from);
         invitationParams.setServer(server);
-        Call<Void> invitationCall = this.serviceAPI.getInvitation(invitationParams);
+        Retrofit tempRetro = new Retrofit.Builder().baseUrl(server).
+                addConverterFactory(GsonConverterFactory.create()).build();
+        ServiceAPI tempServiceAPI = tempRetro.create(ServiceAPI.class);
+        Call<Void> invitationCall = tempServiceAPI.getInvitation(invitationParams);
         invitationCall.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {

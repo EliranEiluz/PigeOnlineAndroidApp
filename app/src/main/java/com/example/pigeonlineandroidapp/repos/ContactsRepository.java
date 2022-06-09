@@ -17,6 +17,7 @@ public class ContactsRepository {
     private ChatsAPI chatsAPI;
     private LocalDatabase db;
 
+
     public ContactsRepository(String username, Context context) {
         this.username = username;
         this.db = LocalDatabase.getInstance(context);
@@ -38,6 +39,7 @@ public class ContactsRepository {
     public LiveData<List<Chat>> getAll() {
         return chatListData;
     }
+
     public boolean add(String from, String to, String server, String displayName) {
         return chatsAPI.post(this.chatListData, to, displayName, server, from);
     }

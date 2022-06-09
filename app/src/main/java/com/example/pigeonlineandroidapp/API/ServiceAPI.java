@@ -16,10 +16,10 @@ public interface ServiceAPI {
     Call<List<Chat>> getChats();
 
     @POST("api/contacts")
-    Call<Void> postChat(PostContactParams params);
+    Call<Void> postChat(@Body PostContactParams params);
 
     @POST("api/Users/Login")
-    Call<User> Login(UserValidation userValidation);
+    Call<User> Login(@Body UserValidation userValidation);
 
     @POST("api/Users")
     Call<User> postUser(User user);

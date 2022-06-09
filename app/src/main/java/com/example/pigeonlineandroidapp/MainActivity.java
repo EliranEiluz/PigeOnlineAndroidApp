@@ -11,15 +11,20 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.pigeonlineandroidapp.API.UserAPI;
 import com.google.firebase.iid.FirebaseInstanceId;
 
 public class MainActivity extends AppCompatActivity {
+
+    private UserAPI userAPI;
+    private String token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         System.out.println("onCreate LOGIN");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        this.userAPI = new UserAPI(this.getApplicationContext());
 
         Button registerBtn = findViewById(R.id.main_register_btn);
         registerBtn.setOnClickListener(view -> {
@@ -32,10 +37,13 @@ public class MainActivity extends AppCompatActivity {
             EditText userName = findViewById(R.id.main_username);
             EditText password = findViewById(R.id.main_password);
             if(!userName.getText().toString().equals("") && !password.getText().toString().equals("")) {
-                // *** validate with server  username and password. ***
-                Intent intent = new Intent(this, ContactsActivity.class);
-                intent.putExtra("username", userName.getText().toString());
-                startActivity(intent);
+                this.token = this.userAPI.Login(userName.getText().toString(), password.getText().toString());
+                if(this.token != null) {
+                    Intent intent = new Intent(this, ContactsActivity.class);
+                    intent.putExtra("username", userName.getText().toString());
+                    intent.putExtra("token", this.token);
+                    startActivity(intent);
+                }
             }
             else {
                 TextView warningMessage = findViewById(R.id.main_warning_message);

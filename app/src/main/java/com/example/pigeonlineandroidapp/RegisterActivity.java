@@ -10,9 +10,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.pigeonlineandroidapp.API.UserAPI;
+
 import java.util.regex.Pattern;
 
 public class RegisterActivity extends AppCompatActivity {
+    private UserAPI userAPI;
+    private String token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

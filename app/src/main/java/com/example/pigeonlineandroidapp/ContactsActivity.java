@@ -48,6 +48,7 @@ public class ContactsActivity extends AppCompatActivity {
             }
             }
             intent.putExtra("identifiers_list", identifiersLst);
+            intent.putExtra("username", this.username);
             startActivity(intentAdd);
         });
 

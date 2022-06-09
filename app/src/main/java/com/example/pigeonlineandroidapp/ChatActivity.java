@@ -55,8 +55,6 @@ public class ChatActivity extends AppCompatActivity {
                 return;
             }
 
-            // send
-            // add on server.
             Date date = new Date();
             SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
             this.messagesViewModel.add(new Message(currentUsername,

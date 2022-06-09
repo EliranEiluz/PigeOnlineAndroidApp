@@ -69,6 +69,14 @@ public class RegisterActivity extends AppCompatActivity {
 
         });
 
+
+        /*
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(
+                MainActivity.this, instanceIdResult -> {
+                   String token = instanceIdResult.getToken();
+                });
+         */
+
     }
 
 }

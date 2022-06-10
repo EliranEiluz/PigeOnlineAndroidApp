@@ -32,20 +32,9 @@ public class ContactsRepository {
         public ChatListData() {
             super();
             setValue(new ArrayList<>());
-        }
-
-        @Override
-        protected void onActive() {
-            super.onActive();
-            /*
             new Thread(()-> {
                 postValue(chatsDao.index(username));
             }).start();
-            *
-
-             */
-            List<Chat> c =chatsDao.index(username);
-            setValue(chatsDao.index(username));
         }
     }
 
@@ -64,7 +53,7 @@ public class ContactsRepository {
             List<Chat> tempList = this.chatListData.getValue();
             tempList.add(chat);
             this.chatListData.setValue(tempList);
-            new Thread(() -> {chatsDao.insert(chat);});
+            new Thread(() -> {chatsDao.insert(chat);}).start();
             addContactActivity.hadnleSuccess();
         }
         else {

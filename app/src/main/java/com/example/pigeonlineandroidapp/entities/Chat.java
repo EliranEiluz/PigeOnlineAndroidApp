@@ -62,11 +62,11 @@ public class Chat {
         this.displayName = displayName;
     }
 
-    public int getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(int image) {
+    public void setImage(String image) {
         this.image = image;
     }
 
@@ -86,7 +86,7 @@ public class Chat {
         this.chatOwner = chatOwner;
     }
 
-    private int image;
+    private String image;
 
     private String serverURL;
 
@@ -98,7 +98,6 @@ public class Chat {
         this.date = "";
         this.displayName = displayName;
         this.serverURL = serverURL;
-        this.image = R.drawable.im3;
         this.chatOwner = chatOwner;
     }
 

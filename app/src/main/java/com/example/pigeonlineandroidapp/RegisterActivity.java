@@ -91,7 +91,7 @@ public class RegisterActivity extends AppCompatActivity {
         if(responseCode == 200) {
             Intent intent = new Intent(this, ContactsActivity.class);
             intent.putExtra("username", username);
-            intent.putExtra("token", token);
+            intent.putExtra("token", "Bearer " + token);
             startActivity(intent);
         }
         else {

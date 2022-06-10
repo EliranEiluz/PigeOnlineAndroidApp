@@ -5,11 +5,16 @@ import com.example.pigeonlineandroidapp.ChatsDao;
 import com.example.pigeonlineandroidapp.R;
 import com.example.pigeonlineandroidapp.entities.Chat;
 import java.util.List;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class ChatsAPI {
 
@@ -20,15 +25,20 @@ public class ChatsAPI {
     private String token;
 
 
-    public ChatsAPI(Context context, ChatsDao chatsDao) {
+    public ChatsAPI(Context context, ChatsDao chatsDao, String token) {
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
         this.retrofit = new Retrofit.Builder().baseUrl(context.getString(R.string.BaseUrl)).
-                addConverterFactory(GsonConverterFactory.create()).build();
+                addConverterFactory(ScalarsConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create()).client(client).build();
         this.serviceAPI = retrofit.create(ServiceAPI.class);
         this.chatsDao = chatsDao;
+        this.token = token;
     }
 
     public void get(MutableLiveData<List<Chat>> chatsList) {
-        Call<List<Chat>> call = this.serviceAPI.getChats();
+        Call<List<Chat>> call = this.serviceAPI.getChats(this.token);
         call.enqueue(new Callback<List<Chat>>() {
             @Override
             public void onResponse(Call<List<Chat>> call, Response<List<Chat>> response) {
@@ -51,7 +61,7 @@ public class ChatsAPI {
         Retrofit tempRetro = new Retrofit.Builder().baseUrl(server).
                 addConverterFactory(GsonConverterFactory.create()).build();
         ServiceAPI tempServiceAPI = tempRetro.create(ServiceAPI.class);
-        Call<Void> invitationCall = tempServiceAPI.getInvitation(invitationParams);
+        Call<Void> invitationCall = tempServiceAPI.getInvitation(invitationParams, this.token);
         invitationCall.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
@@ -60,7 +70,7 @@ public class ChatsAPI {
                     postContactParams.setId(to);
                     postContactParams.setName(name);
                     postContactParams.setServer(server);
-                    Call<Void> postCall = serviceAPI.postChat(postContactParams);
+                    Call<Void> postCall = serviceAPI.postChat(postContactParams, token);
                     postCall.enqueue(new Callback<Void>() {
                         @Override
                         public void onResponse(Call<Void> call, Response<Void> response) {

@@ -8,15 +8,16 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 public interface ServiceAPI {
     @GET("api/contacts")
-    Call<List<Chat>> getChats();
+    Call<List<Chat>> getChats(@Header("Authorization") String auth);
 
     @POST("api/contacts")
-    Call<Void> postChat(@Body PostContactParams params);
+    Call<Void> postChat(@Body PostContactParams params, @Header("Authorization") String auth);
 
     @POST("api/Users/Login")
     Call<User> Login(@Body UserValidation userValidation);
@@ -25,15 +26,16 @@ public interface ServiceAPI {
     Call<String> postUser(@Body User user);
 
     @GET("api/contacts/{id}/messages")
-    Call<List<Message>> getMessages(@Path("id") String id);
+    Call<List<Message>> getMessages(@Path("id") String id, @Header("Authorization") String auth);
 
     @POST("api/contacts/{id}/messages")
-    Call<Void> postMessage(@Path("id") String id, @Body MessageContent messageContent);
+    Call<Void> postMessage(@Path("id") String id, @Body MessageContent messageContent,
+                           @Header("Authorization") String auth);
 
     @POST("api/transfer")
-    Call<Void> transfer(@Body TransferParams transferParams);
+    Call<Void> transfer(@Body TransferParams transferParams, @Header("Authorization") String auth);
 
     @POST("api/invitations")
-    Call<Void> getInvitation(@Body InvitationParams invitationParams);
+    Call<Void> getInvitation(@Body InvitationParams invitationParams, @Header("Authorization") String auth);
 
 }

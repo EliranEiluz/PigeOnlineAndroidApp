@@ -19,6 +19,7 @@ import java.util.ArrayList;
 public class AddContactActivity extends AppCompatActivity {
     private ContactsViewModel contactsViewModel;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,8 +27,9 @@ public class AddContactActivity extends AppCompatActivity {
 
         Intent intentParams = getIntent();
         String username = intentParams.getExtras().getString("username");
+        String token = intentParams.getExtras().getString("token");
         this.contactsViewModel = new ViewModelProvider(this, new ContactsViewModelFactory
-                (username, getApplicationContext())).get(ContactsViewModel.class);
+                (username, getApplicationContext(), token)).get(ContactsViewModel.class);
 
         Button addBtn = findViewById(R.id.contact_add_btn);
         addBtn.setOnClickListener(item -> {

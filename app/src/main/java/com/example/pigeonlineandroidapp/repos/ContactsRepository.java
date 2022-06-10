@@ -18,12 +18,12 @@ public class ContactsRepository {
     private LocalDatabase db;
 
 
-    public ContactsRepository(String username, Context context) {
+    public ContactsRepository(String username, Context context, String token) {
         this.username = username;
         this.db = LocalDatabase.getInstance(context);
         this.chatsDao = db.chatDao();
         this.chatListData = new ChatListData();
-        this.chatsAPI = new ChatsAPI(context, this.chatsDao);
+        this.chatsAPI = new ChatsAPI(context, this.chatsDao, token);
     }
 
     class ChatListData extends MutableLiveData<List<Chat>> {

@@ -22,6 +22,7 @@ public class ContactsActivity extends AppCompatActivity {
     private ContactsViewModel contactsViewModel;
     private String username;
     private ListView contactsListView;
+    private String token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,8 +32,9 @@ public class ContactsActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
         this.username = intent.getExtras().getString("username");
+        this.token = intent.getExtras().getString("token");
         this.contactsViewModel = new ViewModelProvider(this, new ContactsViewModelFactory
-                (this.username, getApplicationContext())).get(ContactsViewModel.class);
+                (this.username, getApplicationContext(), this.token)).get(ContactsViewModel.class);
         this.contactsListView = findViewById(R.id.contacts_chatsList);
         List<Chat> chats = this.contactsViewModel.get().getValue();
         final ContactsAdapter contactsAdapter = new ContactsAdapter(getApplicationContext(), chats);
@@ -43,12 +45,13 @@ public class ContactsActivity extends AppCompatActivity {
             Intent intentAdd = new Intent(getApplicationContext(), AddContactActivity.class);
             ArrayList<String> identifiersLst = new ArrayList<>();
             if(chats != null) {
-            for (Chat chat : chats) {
-                identifiersLst.add(chat.getChatWith());
+                for (Chat chat : chats) {
+                    identifiersLst.add(chat.getChatWith());
+                }
             }
-            }
-            intent.putExtra("identifiers_list", identifiersLst);
-            intent.putExtra("username", this.username);
+            intentAdd.putExtra("identifiers_list", identifiersLst);
+            intentAdd.putExtra("username", this.username);
+            intentAdd.putExtra("token", this.token);
             startActivity(intentAdd);
         });
 
@@ -61,6 +64,7 @@ public class ContactsActivity extends AppCompatActivity {
                 intent.putExtra("contactUsername", contactsAdapter.getItem(position).getChatWith());
                 intent.putExtra("contactDisplayName", contactsAdapter.getItem(position).getDisplayName());
                 intent.putExtra("chatId", contactsAdapter.getItem(position).getId());
+                intent.putExtra("token", token);
                 startActivity(intent);
             }
         });

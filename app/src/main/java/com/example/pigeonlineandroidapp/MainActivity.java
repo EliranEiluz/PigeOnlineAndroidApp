@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         if(this.token != null) {
             Intent intent = new Intent(this, ContactsActivity.class);
             intent.putExtra("username", userName);
-            intent.putExtra("token", this.token);
+            intent.putExtra("token", "Bearer " + this.token);
             startActivity(intent);
         }
         else {

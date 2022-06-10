@@ -18,6 +18,8 @@ import java.util.ArrayList;
 
 public class AddContactActivity extends AppCompatActivity {
     private ContactsViewModel contactsViewModel;
+    private String username;
+    private String token;
 
 
     @Override
@@ -26,8 +28,8 @@ public class AddContactActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_contact);
 
         Intent intentParams = getIntent();
-        String username = intentParams.getExtras().getString("username");
-        String token = intentParams.getExtras().getString("token");
+        this.username = intentParams.getExtras().getString("username");
+        this.token = intentParams.getExtras().getString("token");
         this.contactsViewModel = new ViewModelProvider(this, new ContactsViewModelFactory
                 (username, getApplicationContext(), token)).get(ContactsViewModel.class);
 
@@ -62,17 +64,25 @@ public class AddContactActivity extends AppCompatActivity {
                 }
             }
 
-            if(this.contactsViewModel.add(username, identifier.getText().toString(),
+            this.contactsViewModel.add(username, identifier.getText().toString(),
                     server.getText().toString(),
-                    displayName.getText().toString())) {
-                Intent intent = new Intent(getApplicationContext(), ContactsActivity.class);
-                startActivity(intent);
-            } else {
-                warningMessage.setText("User not exist !");
-                warningMessage.setVisibility(View.VISIBLE);
-                return;
-            }
+                    displayName.getText().toString(), this);
+
 
         });
     }
+
+    public void hadnleSuccess() {
+        Intent intent = new Intent(getApplicationContext(), ContactsActivity.class);
+        intent.putExtra("username", this.username);
+        intent.putExtra("token", this.token);
+        startActivity(intent);
+    }
+
+    public void handleFailure() {
+        TextView warningMessage = findViewById(R.id.contact_warning_message);
+        warningMessage.setText("User not exist !");
+        warningMessage.setVisibility(View.VISIBLE);
+    }
+
 }

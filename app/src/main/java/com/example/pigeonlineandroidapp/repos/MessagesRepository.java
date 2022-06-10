@@ -12,7 +12,7 @@ public class MessagesRepository {
     private MessagesRepository.MessageListData messageListData;
     private LocalDatabase db;
 
-    public MessagesRepository(Context context, int id) {
+    public MessagesRepository(Context context, int id, String token) {
         this.db = LocalDatabase.getInstance(context);
         this.messagesDao = db.messagesDao();
         this.messageListData = new MessageListData(id);

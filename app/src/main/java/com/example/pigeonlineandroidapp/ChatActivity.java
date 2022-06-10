@@ -33,6 +33,7 @@ public class ChatActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String currentUsername = intent.getExtras().getString("currentUsername");
         String contactUsername = intent.getExtras().getString("contactUsername");
+        String token = intent.getExtras().getString("token");
         String contactDisplayName = intent.getExtras().getString("contactDisplayName");
         int chatID = Integer.parseInt(intent.getExtras().getString("chatId"));
 
@@ -40,7 +41,7 @@ public class ChatActivity extends AppCompatActivity {
         displayNameTV.setText(contactDisplayName);
 
         this.messagesViewModel = new ViewModelProvider(this, new MessagesViewModelFactory
-                (chatID, getApplicationContext())).get(MessagesViewModel.class);
+                (chatID, getApplicationContext(), token)).get(MessagesViewModel.class);
 
         this.messagesLV = findViewById(R.id.chat_messagesList);
         List<Message> messages = this.messagesViewModel.get().getValue();

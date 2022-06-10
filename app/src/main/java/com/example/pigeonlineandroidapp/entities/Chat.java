@@ -102,4 +102,6 @@ public class Chat {
         this.chatOwner = chatOwner;
     }
 
+    public Chat() {
+    }
 }

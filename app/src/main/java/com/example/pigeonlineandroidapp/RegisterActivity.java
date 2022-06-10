@@ -69,7 +69,7 @@ public class RegisterActivity extends AppCompatActivity {
             user.setUsername(userName.getText().toString());
             user.setPassword(password.getText().toString());
             user.setDisplayName(displayName.getText().toString());
-            user.setImage("");
+            user.setImage("Image");
             //user.setServerURL("");
             this.userAPI.postUser(user, this);
             // Check Img.

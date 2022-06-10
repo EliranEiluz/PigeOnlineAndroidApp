@@ -35,7 +35,8 @@ public class ChatActivity extends AppCompatActivity {
         String contactUsername = intent.getExtras().getString("contactUsername");
         String token = intent.getExtras().getString("token");
         String contactDisplayName = intent.getExtras().getString("contactDisplayName");
-        int chatID = Integer.parseInt(intent.getExtras().getString("chatId"));
+        //int chatID = Integer.parseInt(intent.getExtras().getString("chatId"));
+        int chatID = intent.getExtras().getInt("chatId");
 
         TextView displayNameTV = findViewById(R.id.chat_displayName);
         displayNameTV.setText(contactDisplayName);

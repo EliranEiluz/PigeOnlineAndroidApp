@@ -40,13 +40,12 @@ public class ChatsAPI {
         this.token = token;
     }
 
-    public void get(MutableLiveData<List<Chat>> chatsList) {
+    public void get(ContactsRepository repository) {
         Call<List<Chat>> call = this.serviceAPI.getChats(this.token);
         call.enqueue(new Callback<List<Chat>>() {
             @Override
             public void onResponse(Call<List<Chat>> call, Response<List<Chat>> response) {
-                chatsList.setValue(response.body());
-                new Thread(() -> {chatsDao.insertAll(chatsList.getValue());});
+                repository.handleGetChats(response.code(), response.body());
             }
 
             @Override

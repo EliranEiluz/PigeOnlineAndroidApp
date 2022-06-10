@@ -24,8 +24,9 @@ public class ContactsRepository {
         this.username = username;
         this.db = LocalDatabase.getInstance(context);
         this.chatsDao = db.chatDao();
-        this.chatListData = new ChatListData();
         this.chatsAPI = new ChatsAPI(context, this.chatsDao, token);
+        this.chatListData = new ChatListData();
+        this.chatsAPI.get(this);
     }
 
     class ChatListData extends MutableLiveData<List<Chat>> {
@@ -71,6 +72,18 @@ public class ContactsRepository {
         }
         else {
             addContactActivity.handleFailure();
+        }
+    }
+
+    public void handleGetChats(int responseNum, List<Chat> chatsList) {
+        if(responseNum == 200) {
+            for(Chat chat : chatsList) {
+                chat.setChatOwner(username);
+            }
+            this.chatListData.setValue(chatsList);
+            new Thread(() -> {
+                chatsDao.insertAll(chatsList);
+            }).start();
         }
     }
 }

@@ -1,9 +1,13 @@
 package com.example.pigeonlineandroidapp.API;
 import android.content.Context;
 import androidx.lifecycle.MutableLiveData;
+
+import com.example.pigeonlineandroidapp.AddContactActivity;
 import com.example.pigeonlineandroidapp.ChatsDao;
 import com.example.pigeonlineandroidapp.R;
 import com.example.pigeonlineandroidapp.entities.Chat;
+import com.example.pigeonlineandroidapp.repos.ContactsRepository;
+
 import java.util.List;
 
 import okhttp3.OkHttpClient;
@@ -21,7 +25,6 @@ public class ChatsAPI {
     private ServiceAPI serviceAPI;
     private ChatsDao chatsDao;
     private Retrofit retrofit;
-    private boolean isValid;
     private String token;
 
 
@@ -53,7 +56,25 @@ public class ChatsAPI {
         });
     }
 
-    public boolean post(MutableLiveData<List<Chat>> chatsList, String to, String name, String server, String from) {
+    public void post(PostContactParams postContactParams, ContactsRepository contactsRepository, String username, AddContactActivity addContactActivity) {
+        Call<Void> postContactCall = serviceAPI.postChat(postContactParams, this.token);
+        postContactCall.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                contactsRepository.postChatHandler(response.code(), postContactParams.getId(),
+                        postContactParams.getName(), postContactParams.getServer(), username, addContactActivity);
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                contactsRepository.postChatHandler(0, postContactParams.getId(),
+                        postContactParams.getName(), postContactParams.getServer(), username, addContactActivity);
+            }
+        });
+
+    }
+
+    public void sendInvitation(String to, String from, String server, String name,ContactsRepository contactsRepository, AddContactActivity addContactActivity) {
         InvitationParams invitationParams = new InvitationParams();
         invitationParams.setTo(to);
         invitationParams.setFrom(from);
@@ -65,44 +86,15 @@ public class ChatsAPI {
         invitationCall.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
-                if(response.code() == 201) {
-                    PostContactParams postContactParams = new PostContactParams();
-                    postContactParams.setId(to);
-                    postContactParams.setName(name);
-                    postContactParams.setServer(server);
-                    Call<Void> postCall = serviceAPI.postChat(postContactParams, token);
-                    postCall.enqueue(new Callback<Void>() {
-                        @Override
-                        public void onResponse(Call<Void> call, Response<Void> response) {
-                            if(response.code() == 201) {
-                                Chat chat = new Chat(to, name, server, from);
-                                List<Chat> tempList = chatsList.getValue();
-                                tempList.add(chat);
-                                chatsList.setValue(tempList);
-                                new Thread(() -> {chatsDao.insert(chat);});
-                                isValid = true;
-                            }
-                            else {
-                                isValid = false;
-                            }
-                        }
-                        @Override
-                        public void onFailure(Call<Void> call, Throwable t) {
-                            isValid = false;
-                        }
-                    });
-                }
-                else {
-                    isValid = false;
-                }
+                contactsRepository.afterInvitationHandler(response.code(), to, name, server, addContactActivity);
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                isValid = false;
+                contactsRepository.afterInvitationHandler(0, to, name, server, addContactActivity);
             }
         });
-        return this.isValid;
     }
+
 }
 

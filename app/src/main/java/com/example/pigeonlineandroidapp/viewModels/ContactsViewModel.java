@@ -2,6 +2,8 @@ package com.example.pigeonlineandroidapp.viewModels;
 import android.content.Context;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
+
+import com.example.pigeonlineandroidapp.AddContactActivity;
 import com.example.pigeonlineandroidapp.entities.Chat;
 import com.example.pigeonlineandroidapp.repos.ContactsRepository;
 import java.util.List;
@@ -20,8 +22,8 @@ public class ContactsViewModel extends ViewModel {
         return this.chats;
     }
 
-    public boolean add(String from, String to, String server, String displayName) {
-       return repository.add(from, to, server, displayName);
+    public void add(String from, String to, String server, String displayName, AddContactActivity addContactActivity) {
+        this.repository.add(from, to, server, displayName, addContactActivity);
     }
 
 }

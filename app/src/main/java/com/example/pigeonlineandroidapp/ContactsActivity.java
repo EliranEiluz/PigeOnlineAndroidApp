@@ -47,8 +47,8 @@ public class ContactsActivity extends AppCompatActivity {
                 identifiersLst.add(chat.getChatWith());
             }
             }
-            intent.putExtra("identifiers_list", identifiersLst);
-            intent.putExtra("username", this.username);
+            intentAdd.putExtra("identifiers_list", identifiersLst);
+            intentAdd.putExtra("username", this.username);
             startActivity(intentAdd);
         });
 

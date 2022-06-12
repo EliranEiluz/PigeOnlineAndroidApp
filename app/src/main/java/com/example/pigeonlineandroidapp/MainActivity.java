@@ -49,12 +49,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        /*
+
         FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(
                 MainActivity.this, instanceIdResult -> {
                    String token = instanceIdResult.getToken();
                 });
-         */
+
     }
 
     public void handleLoginResponse(User user, int responseCode, String userName) {

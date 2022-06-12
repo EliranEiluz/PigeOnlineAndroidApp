@@ -45,8 +45,10 @@ public class ChatActivity extends AppCompatActivity {
         this.messagesViewModel = new ViewModelProvider(this, new MessagesViewModelFactory
                 (chatID, getApplicationContext(), token)).get(MessagesViewModel.class);
 
-        // set the chat in the repository when push contact.
+        // set the chatId and the contact in the repository when push contact.
         messagesViewModel.setNewChat(chatID);
+        messagesViewModel.setContact(contactUsername);
+
         this.messagesLV = findViewById(R.id.chat_messagesList);
         List<Message> messages = this.messagesViewModel.get().getValue();
         final MessagesAdapter messagesAdapter = new MessagesAdapter(getApplicationContext(),
@@ -64,7 +66,7 @@ public class ChatActivity extends AppCompatActivity {
             SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
             this.messagesViewModel.add(new Message(this.username,
                     messageEt.getText().toString(),
-                    formatter.format(date), chatID));
+                    formatter.format(date), chatID, "text"));
 
         });
 

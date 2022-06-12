@@ -20,7 +20,7 @@ public class MessagesRepository {
     public MessagesRepository(Context context, int id, String token) {
         this.db = LocalDatabase.getInstance(context);
         this.messagesDao = db.messagesDao();
-        this.messagesAPI = new messagesAPI();
+        this.messagesAPI = new messagesAPI(context, token);
         this.messageListData = new MessageListData(id);
         this.messagesAPI.get(this);
     }
@@ -46,6 +46,9 @@ public class MessagesRepository {
 
     public void setMessageListData(int id) {
         this.messageListData = new MessageListData(id);
+    }
+    public void setContact(String contact) {
+        this.contactUsername = contact;
     }
 
     public void add(Message message) {

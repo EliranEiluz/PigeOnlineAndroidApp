@@ -24,6 +24,9 @@ public class MessagesViewModel extends ViewModel {
     public void setNewChat(int id) {
         this.repository.setMessageListData(id);
     }
+    public void setContact(String contact) {
+        this.repository.setContact(contact);
+    }
 
     public void add(Message message) {
         repository.add(message);

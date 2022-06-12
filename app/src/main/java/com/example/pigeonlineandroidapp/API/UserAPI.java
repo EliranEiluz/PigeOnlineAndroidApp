@@ -1,8 +1,6 @@
 package com.example.pigeonlineandroidapp.API;
 
-import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
 
 import com.example.pigeonlineandroidapp.MainActivity;
 import com.example.pigeonlineandroidapp.R;

@@ -28,10 +28,11 @@ public class AddContactActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_contact);
 
         Intent intentParams = getIntent();
+        String appToken = intentParams.getExtras().getString("appToken");
         this.username = intentParams.getExtras().getString("username");
         this.token = intentParams.getExtras().getString("token");
         this.contactsViewModel = new ViewModelProvider(this, new ContactsViewModelFactory
-                (username, getApplicationContext(), token)).get(ContactsViewModel.class);
+                (username, getApplicationContext(), token, appToken)).get(ContactsViewModel.class);
 
         Button addBtn = findViewById(R.id.contact_add_btn);
         addBtn.setOnClickListener(item -> {

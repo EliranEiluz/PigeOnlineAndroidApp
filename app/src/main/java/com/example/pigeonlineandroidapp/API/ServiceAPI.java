@@ -25,6 +25,9 @@ public interface ServiceAPI {
     @POST("api/Users")
     Call<String> postUser(@Body User user);
 
+    @POST("api/Users/declare")
+    Call<Void> declareOnline(@Body String appToken, @Header("Authorization") String auth);
+
     @GET("api/contacts/{id}/messages")
     Call<List<Message>> getMessages(@Path("id") String id, @Header("Authorization") String auth);
 

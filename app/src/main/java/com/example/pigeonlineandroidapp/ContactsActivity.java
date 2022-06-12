@@ -19,6 +19,7 @@ import java.util.List;
 
 public class ContactsActivity extends AppCompatActivity {
 
+
     private ContactsViewModel contactsViewModel;
     private String username;
     private ListView contactsListView;
@@ -34,8 +35,9 @@ public class ContactsActivity extends AppCompatActivity {
         this.lastPressedChat = -1;
         this.username = intent.getExtras().getString("username");
         this.token = intent.getExtras().getString("token");
+        String appToken = intent.getExtras().getString("appToken");
         this.contactsViewModel = new ViewModelProvider(this, new ContactsViewModelFactory
-                (this.username, getApplicationContext(), this.token)).get(ContactsViewModel.class);
+                (this.username, getApplicationContext(), this.token, appToken)).get(ContactsViewModel.class);
         this.contactsListView = findViewById(R.id.contacts_chatsList);
         List<Chat> chats = this.contactsViewModel.get().getValue();
         final ContactsAdapter contactsAdapter = new ContactsAdapter(getApplicationContext(), chats);
@@ -53,6 +55,7 @@ public class ContactsActivity extends AppCompatActivity {
             intentAdd.putExtra("identifiers_list", identifiersLst);
             intentAdd.putExtra("username", this.username);
             intentAdd.putExtra("token", this.token);
+            intentAdd.putExtra("appToken", appToken);
             startActivity(intentAdd);
         });
 

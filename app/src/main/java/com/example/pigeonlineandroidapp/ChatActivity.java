@@ -27,6 +27,7 @@ public class ChatActivity extends AppCompatActivity {
     private String token;
     private String username;
     private String contactServer;
+    private String defaultServer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +35,7 @@ public class ChatActivity extends AppCompatActivity {
         setContentView(R.layout.activity_chat);
 
         Intent intent = getIntent();
+        this.defaultServer = intent.getExtras().getString("defaultServer");
         this.username = intent.getExtras().getString("currentUsername");
         String contactUsername = intent.getExtras().getString("contactUsername");
         this.token = intent.getExtras().getString("token");
@@ -45,7 +47,7 @@ public class ChatActivity extends AppCompatActivity {
         displayNameTV.setText(contactDisplayName);
 
         this.messagesViewModel = new ViewModelProvider(this, new MessagesViewModelFactory
-                (chatID, getApplicationContext(), token, contactUsername, this.username)).get(MessagesViewModel.class);
+                (chatID, getApplicationContext(), token, contactUsername, this.username, this.defaultServer)).get(MessagesViewModel.class);
 
         /*
         // set the chatId and the contact in the repository when push contact.

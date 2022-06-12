@@ -20,11 +20,11 @@ public class ContactsRepository {
     private LocalDatabase db;
 
 
-    public ContactsRepository(String username, Context context, String token, String appToken) {
+    public ContactsRepository(String username, Context context, String token, String appToken, String defaultServer) {
         this.username = username;
         this.db = LocalDatabase.getInstance(context);
         this.chatsDao = db.chatDao();
-        this.chatsAPI = new ChatsAPI(context, this.chatsDao, token);
+        this.chatsAPI = new ChatsAPI(context, this.chatsDao, token, defaultServer);
         this.chatListData = new ChatListData();
         this.chatsAPI.declareOnline(appToken);
         this.chatsAPI.get(this);

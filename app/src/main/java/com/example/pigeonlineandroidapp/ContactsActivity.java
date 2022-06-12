@@ -25,6 +25,7 @@ public class ContactsActivity extends AppCompatActivity {
     private ListView contactsListView;
     private String token;
     private int lastPressedChat;
+    private String defaultServer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,11 +34,12 @@ public class ContactsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_contacts);
         Intent intent = getIntent();
         this.lastPressedChat = -1;
+        this.defaultServer = intent.getExtras().getString("defaultServer");
         this.username = intent.getExtras().getString("username");
         this.token = intent.getExtras().getString("token");
         String appToken = intent.getExtras().getString("appToken");
         this.contactsViewModel = new ViewModelProvider(this, new ContactsViewModelFactory
-                (this.username, getApplicationContext(), this.token, appToken)).get(ContactsViewModel.class);
+                (this.username, getApplicationContext(), this.token, appToken, this.defaultServer)).get(ContactsViewModel.class);
         this.contactsListView = findViewById(R.id.contacts_chatsList);
         List<Chat> chats = this.contactsViewModel.get().getValue();
         final ContactsAdapter contactsAdapter = new ContactsAdapter(getApplicationContext(), chats);
@@ -56,6 +58,7 @@ public class ContactsActivity extends AppCompatActivity {
             intentAdd.putExtra("username", this.username);
             intentAdd.putExtra("token", this.token);
             intentAdd.putExtra("appToken", appToken);
+            intentAdd.putExtra("defaultServer", this.defaultServer);
             startActivity(intentAdd);
         });
 
@@ -70,6 +73,7 @@ public class ContactsActivity extends AppCompatActivity {
                 intent.putExtra("chatId", contactsAdapter.getItem(position).getId());
                 intent.putExtra("server", contactsAdapter.getItem(position).getServerURL());
                 intent.putExtra("token", token);
+                intent.putExtra("defaultServer", defaultServer);
                 lastPressedChat = contactsAdapter.getItem(position).getId();
                 startActivity(intent);
             }

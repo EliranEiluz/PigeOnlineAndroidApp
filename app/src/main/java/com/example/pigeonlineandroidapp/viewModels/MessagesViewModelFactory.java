@@ -12,17 +12,19 @@ public class MessagesViewModelFactory implements ViewModelProvider.Factory {
     private String token;
     private String contactUsername;
     private String username;
+    private String defaultServer;
 
-    public MessagesViewModelFactory(int chatID, Context context, String token, String contactUsername, String username) {
+    public MessagesViewModelFactory(int chatID, Context context, String token, String contactUsername, String username, String defaultServer) {
         this.chatID = chatID;
         this.context = context;
         this.token = token;
         this.contactUsername = contactUsername;
         this.username = username;
+        this.defaultServer = defaultServer;
     }
 
     @Override
     public <T extends ViewModel> T create(Class<T> modelClass) {
-        return (T) new MessagesViewModel(context, chatID, token, contactUsername, username);
+        return (T) new MessagesViewModel(context, chatID, token, contactUsername, username, defaultServer);
     }
 }

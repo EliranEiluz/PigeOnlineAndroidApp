@@ -20,13 +20,15 @@ public class MainActivity extends AppCompatActivity {
     private UserAPI userAPI;
     private String token;
     private String appToken = null;
+    private String defaultServer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         System.out.println("onCreate LOGIN");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        this.userAPI = new UserAPI(this.getApplicationContext());
+        this.defaultServer = this.getString(R.string.BaseUrl);
+        this.userAPI = new UserAPI(this.getApplicationContext(), this.defaultServer);
         FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(
                 MainActivity.this, instanceIdResult -> {
                     this.appToken = instanceIdResult.getToken();
@@ -34,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
         Button registerBtn = findViewById(R.id.main_register_btn);
         registerBtn.setOnClickListener(view -> {
             Intent intent = new Intent(this, RegisterActivity.class);
+            intent.putExtra("defaultServer", this.defaultServer);
             startActivity(intent);
         });
 
@@ -53,12 +56,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(
-                MainActivity.this, instanceIdResult -> {
-                   String token = instanceIdResult.getToken();
-                });
-
     }
 
     public void handleLoginResponse(User user, int responseCode, String userName) {
@@ -69,10 +66,15 @@ public class MainActivity extends AppCompatActivity {
             this.token = null;
         }
         if(this.token != null) {
+            EditText userNameET = findViewById(R.id.main_username);
+            EditText passwordET = findViewById(R.id.main_password);
+            userNameET.setText("");
+            passwordET.setText("");
             Intent intent = new Intent(this, ContactsActivity.class);
             intent.putExtra("username", userName);
             intent.putExtra("token", "Bearer " + this.token);
             intent.putExtra("appToken", this.appToken);
+            intent.putExtra("defaultServer", this.defaultServer);
             startActivity(intent);
         }
         else {
@@ -81,6 +83,18 @@ public class MainActivity extends AppCompatActivity {
             ViewGroup.LayoutParams params = warningMessage.getLayoutParams();
             params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
             warningMessage.setLayoutParams(params);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Intent intent = getIntent();
+        Bundle extras = intent.getExtras();
+        if (extras != null) {
+            if (extras.containsKey("defaultServer")) {
+                this.defaultServer = intent.getExtras().getString("defaultServer");
+            }
         }
     }
 

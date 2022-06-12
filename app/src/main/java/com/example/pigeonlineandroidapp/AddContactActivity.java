@@ -20,6 +20,7 @@ public class AddContactActivity extends AppCompatActivity {
     private ContactsViewModel contactsViewModel;
     private String username;
     private String token;
+    private String defaultServer;
 
 
     @Override
@@ -31,8 +32,9 @@ public class AddContactActivity extends AppCompatActivity {
         String appToken = intentParams.getExtras().getString("appToken");
         this.username = intentParams.getExtras().getString("username");
         this.token = intentParams.getExtras().getString("token");
+        this.defaultServer = intentParams.getExtras().getString("defaultServer");
         this.contactsViewModel = new ViewModelProvider(this, new ContactsViewModelFactory
-                (username, getApplicationContext(), token, appToken)).get(ContactsViewModel.class);
+                (username, getApplicationContext(), token, appToken, this.defaultServer)).get(ContactsViewModel.class);
 
         Button addBtn = findViewById(R.id.contact_add_btn);
         addBtn.setOnClickListener(item -> {
@@ -74,6 +76,12 @@ public class AddContactActivity extends AppCompatActivity {
     }
 
     public void hadnleSuccess() {
+        EditText identifierET = findViewById(R.id.contact_identifier);
+        EditText displayET = findViewById(R.id.contact_display);
+        EditText serverET = findViewById(R.id.contact_server);
+        identifierET.setText("");
+        displayET.setText("");
+        serverET.setText("");
         Intent intent = new Intent(getApplicationContext(), ContactsActivity.class);
         intent.putExtra("username", this.username);
         intent.putExtra("token", this.token);

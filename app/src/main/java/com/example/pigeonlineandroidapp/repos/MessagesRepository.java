@@ -29,10 +29,10 @@ public class MessagesRepository {
     private String token;
     private Context context;
 
-    public MessagesRepository(Context context, int id, String token, String contactUsername, String username) {
+    public MessagesRepository(Context context, int id, String token, String contactUsername, String username, String defaultServer) {
         this.db = LocalDatabase.getInstance(context);
         this.messagesDao = db.messagesDao();
-        this.messagesAPI = new MessagesAPI(context, token);
+        this.messagesAPI = new MessagesAPI(context, token, defaultServer);
         this.messageListData = new MessageListData(id);
         this.messagesAPI.get(contactUsername, this);
         this.contactUsername = contactUsername;

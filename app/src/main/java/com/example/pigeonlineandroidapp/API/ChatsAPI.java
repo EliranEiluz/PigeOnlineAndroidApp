@@ -27,12 +27,11 @@ public class ChatsAPI {
     private Retrofit retrofit;
     private String token;
 
-
-    public ChatsAPI(Context context, ChatsDao chatsDao, String token) {
+    public ChatsAPI(Context context, ChatsDao chatsDao, String token, String defaultServer) {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
-        this.retrofit = new Retrofit.Builder().baseUrl(context.getString(R.string.BaseUrl)).
+        this.retrofit = new Retrofit.Builder().baseUrl(defaultServer).
                 addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create()).client(client).build();
         this.serviceAPI = retrofit.create(ServiceAPI.class);

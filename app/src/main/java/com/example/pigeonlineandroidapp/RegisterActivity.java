@@ -19,13 +19,16 @@ import java.util.regex.Pattern;
 public class RegisterActivity extends AppCompatActivity {
     private UserAPI userAPI;
     private String appToken;
+    private String defaultServer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         System.out.println("onCreate REGISTER");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        this.userAPI = new UserAPI(this.getApplicationContext());
+        Intent intentSrv = getIntent();
+        this.defaultServer = intentSrv.getExtras().getString("defaultServer");
+        this.userAPI = new UserAPI(this.getApplicationContext(), this.defaultServer);
         FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(
                 RegisterActivity.this, instanceIdResult -> {
                     this.appToken = instanceIdResult.getToken();
@@ -88,6 +91,14 @@ public class RegisterActivity extends AppCompatActivity {
 
     public void handleRegisterResponse(int responseCode, String token, String username) {
         if(responseCode == 200) {
+            EditText userNameET = findViewById(R.id.register_username);
+            EditText passwordET = findViewById(R.id.register_password);
+            EditText valET = findViewById(R.id.register_validatePass);
+            EditText displayET = findViewById(R.id.register_displayName);
+            userNameET.setText("");
+            passwordET.setText("");
+            valET.setText("");
+            displayET.setText("");
             Intent intent = new Intent(this, ContactsActivity.class);
             intent.putExtra("username", username);
             intent.putExtra("token", "Bearer " + token);

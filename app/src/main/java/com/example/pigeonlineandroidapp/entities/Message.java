@@ -13,9 +13,13 @@ public class Message {
 
     private String from;
 
+
     private String content;
 
+    private String type;
+
     private String date;
+
 
     private int senderPicture;
 
@@ -69,11 +73,24 @@ public class Message {
         this.chatOwnerId = chatOwnerId;
     }
 
-    public Message(String from, String content, String date, int chatOwnerId) {
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+
+    public Message() {
+    }
+
+    public Message(String from, String content, String date, int chatOwnerId, String type) {
         this.from = from;
         this.content = content;
         this.date = date;
         this.senderPicture = R.drawable.im3;
         this.chatOwnerId = chatOwnerId;
+        this.type = type;
     }
 }

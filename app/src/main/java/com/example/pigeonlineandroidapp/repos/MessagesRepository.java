@@ -95,12 +95,12 @@ public class MessagesRepository {
             this.messageListData.setValue(tempList);
             new Thread(() -> {
                 messagesDao.insert(message);
+                ChatsDao chatsDao = db.chatDao();
+                Chat chat = chatsDao.getChat(this.chatOwnerId);
+                chat.setLastMessage(message.getContent());
+                chat.setDate(message.getDate());
+                chatsDao.insert(chat);
             }).start();
-
-
-            ContactsViewModel contactsViewModel = new ViewModelProvider(new ContactsActivity(), new ContactsViewModelFactory
-                    (this.username, this.context, this.token)).get(ContactsViewModel.class);
-            contactsViewModel.updateChat(this.chatOwnerId, message.getContent(), message.getDate());
 
         }
     }

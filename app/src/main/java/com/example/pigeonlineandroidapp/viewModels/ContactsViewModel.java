@@ -26,8 +26,8 @@ public class ContactsViewModel extends ViewModel {
         this.repository.add(from, to, server, displayName, addContactActivity);
     }
 
-    public void updateChat(int id, String lastMessage, String date) {
-        this.repository.update(id, lastMessage, date);
+    public void updateChat(int id) {
+        this.repository.update(id);
     }
 
 }

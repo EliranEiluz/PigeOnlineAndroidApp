@@ -43,7 +43,7 @@ public class ChatActivity extends AppCompatActivity {
         displayNameTV.setText(contactDisplayName);
 
         this.messagesViewModel = new ViewModelProvider(this, new MessagesViewModelFactory
-                (chatID, getApplicationContext(), token)).get(MessagesViewModel.class);
+                (chatID, getApplicationContext(), token, contactUsername)).get(MessagesViewModel.class);
 
         // set the chatId and the contact in the repository when push contact.
         messagesViewModel.setNewChat(chatID);

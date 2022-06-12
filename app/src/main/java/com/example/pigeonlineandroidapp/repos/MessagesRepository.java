@@ -3,7 +3,7 @@ import android.content.Context;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.pigeonlineandroidapp.API.ChatsAPI;
+
 import com.example.pigeonlineandroidapp.API.MessagesAPI;
 import com.example.pigeonlineandroidapp.LocalDatabase;
 import com.example.pigeonlineandroidapp.MessagesDao;

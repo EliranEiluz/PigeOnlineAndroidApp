@@ -21,6 +21,9 @@ public interface ChatsDao {
     @Query("SELECT * FROM chat WHERE chatOwner=:id")
     List<Chat> index(String id);
 
-    @Query("SELECT * FROM chat where id=:id")
+    @Query("SELECT * FROM chat WHERE id=:id")
     Chat getChat(int id);
+
+    @Query("SELECT * FROM chat where chatOwner=:chatOwner and chatWith=:chatWith")
+    Chat getChatByStrings(String chatOwner, String chatWith);
 }

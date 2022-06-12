@@ -11,8 +11,12 @@ import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+import com.example.pigeonlineandroidapp.entities.Message;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class PigeOnlineAndroidAppService extends FirebaseMessagingService {
     public PigeOnlineAndroidAppService() {
@@ -29,8 +33,15 @@ public class PigeOnlineAndroidAppService extends FirebaseMessagingService {
                     .setContentTitle(message.getNotification().getTitle())
                     .setContentText(message.getNotification().getBody())
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+            Date date = new Date();
+            SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
             NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
             notificationManager.notify(1, builder.build());
+            Intent intent = new Intent();
+            intent.putExtra("from", message.getNotification().getTitle());
+            intent.putExtra("content", message.getNotification().getBody());
+            intent.putExtra("date", formatter.format(date));
+            sendBroadcast(intent);
         }
     }
     private void createNotificationChannel() {

@@ -38,6 +38,7 @@ public class PigeOnlineAndroidAppService extends FirebaseMessagingService {
             NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
             notificationManager.notify(1, builder.build());
             Intent intent = new Intent();
+            intent.setAction("onMessageReceived");
             intent.putExtra("from", message.getNotification().getTitle());
             intent.putExtra("content", message.getNotification().getBody());
             intent.putExtra("date", formatter.format(date));

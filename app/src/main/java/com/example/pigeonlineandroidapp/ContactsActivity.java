@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -30,7 +31,7 @@ public class ContactsActivity extends AppCompatActivity {
     private int lastPressedChat;
     private String defaultServer;
 
-    private class MyBroadcastReceiver extends BroadcastReceiver {
+    private class BroadcastMessage extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
             Message message = new Message();
@@ -41,6 +42,7 @@ public class ContactsActivity extends AppCompatActivity {
             contactsViewModel.updateNewMessage(message, username);
         }
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         System.out.println("onCreate CONTACTS");
@@ -106,5 +108,9 @@ public class ContactsActivity extends AppCompatActivity {
             this.contactsViewModel.updateChat(this.lastPressedChat);
             this.lastPressedChat = -1;
         }
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("onMessageReceived");
+        BroadcastMessage receiver = new BroadcastMessage();
+        registerReceiver(receiver, intentFilter);
     }
 }

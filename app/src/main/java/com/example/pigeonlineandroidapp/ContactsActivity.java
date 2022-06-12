@@ -31,7 +31,7 @@ public class ContactsActivity extends AppCompatActivity {
     private int lastPressedChat;
     private String defaultServer;
 
-    private class BroadcastMessage extends BroadcastReceiver {
+    private class BroadcastInContacts extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
             Message message = new Message();
@@ -110,7 +110,7 @@ public class ContactsActivity extends AppCompatActivity {
         }
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("onMessageReceived");
-        BroadcastMessage receiver = new BroadcastMessage();
+        BroadcastInContacts receiver = new BroadcastInContacts();
         registerReceiver(receiver, intentFilter);
     }
 }

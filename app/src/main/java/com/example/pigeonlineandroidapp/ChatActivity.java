@@ -3,7 +3,10 @@ package com.example.pigeonlineandroidapp;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,7 +31,21 @@ public class ChatActivity extends AppCompatActivity {
     private String username;
     private String contactServer;
     private String defaultServer;
+    private String contactUsername;
 
+    private class BroadcastInChat extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Bundle extras = intent.getExtras();
+            if(extras.getString("from").equals(contactUsername)) {
+                Message message = new Message();
+                message.setFrom(extras.getString("from"));
+                message.setContent(extras.getString("content"));
+                message.setDate(extras.getString("date"));
+                messagesViewModel.addMessageFromFireBase(message);
+            }
+        }
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +54,7 @@ public class ChatActivity extends AppCompatActivity {
         Intent intent = getIntent();
         this.defaultServer = intent.getExtras().getString("defaultServer");
         this.username = intent.getExtras().getString("currentUsername");
-        String contactUsername = intent.getExtras().getString("contactUsername");
+        this.contactUsername = intent.getExtras().getString("contactUsername");
         this.token = intent.getExtras().getString("token");
         this.contactServer = intent.getExtras().getString("server");
         String contactDisplayName = intent.getExtras().getString("contactDisplayName");
@@ -87,5 +104,14 @@ public class ChatActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         this.finish();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("onMessageReceived");
+        BroadcastInChat receiver = new BroadcastInChat();
+        registerReceiver(receiver, intentFilter);
     }
 }

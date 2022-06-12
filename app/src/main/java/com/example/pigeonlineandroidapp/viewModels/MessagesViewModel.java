@@ -32,4 +32,8 @@ public class MessagesViewModel extends ViewModel {
     public void add(Message message, String contactServer) {
         this.repository.add(message, contactServer);
     }
+
+    public void addMessageFromFireBase(Message message) {
+        this.repository.addMessageFromFireBase(message);
+    }
 }

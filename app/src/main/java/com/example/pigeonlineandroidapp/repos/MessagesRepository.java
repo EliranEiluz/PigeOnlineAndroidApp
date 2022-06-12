@@ -110,4 +110,10 @@ public class MessagesRepository {
             this.messagesAPI.postMessage(contactUsername, content,this, message);
         }
     }
+
+    public void addMessageFromFireBase(Message message) {
+        List<Message> messages = this.messageListData.getValue();
+        messages.add(message);
+        this.messageListData.setValue(messages);
+    }
 }

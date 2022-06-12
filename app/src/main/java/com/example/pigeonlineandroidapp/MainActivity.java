@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
 
     private UserAPI userAPI;
     private String token;
+    private String appToken = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +27,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         this.userAPI = new UserAPI(this.getApplicationContext());
-
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(
+                MainActivity.this, instanceIdResult -> {
+                    this.appToken = instanceIdResult.getToken();
+                });
         Button registerBtn = findViewById(R.id.main_register_btn);
         registerBtn.setOnClickListener(view -> {
             Intent intent = new Intent(this, RegisterActivity.class);
@@ -68,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(this, ContactsActivity.class);
             intent.putExtra("username", userName);
             intent.putExtra("token", "Bearer " + this.token);
+            intent.putExtra("appToken", this.appToken);
             startActivity(intent);
         }
         else {

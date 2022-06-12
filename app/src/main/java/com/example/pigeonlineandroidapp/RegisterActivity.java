@@ -12,11 +12,13 @@ import android.widget.TextView;
 
 import com.example.pigeonlineandroidapp.API.UserAPI;
 import com.example.pigeonlineandroidapp.entities.User;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.regex.Pattern;
 
 public class RegisterActivity extends AppCompatActivity {
     private UserAPI userAPI;
+    private String appToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +26,10 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         this.userAPI = new UserAPI(this.getApplicationContext());
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(
+                RegisterActivity.this, instanceIdResult -> {
+                    this.appToken = instanceIdResult.getToken();
+                });
         Button loginBtn = findViewById(R.id.register_login_btn);
         loginBtn.setOnClickListener(view -> {
             Intent intent = new Intent(this, MainActivity.class);
@@ -78,13 +84,6 @@ public class RegisterActivity extends AppCompatActivity {
         });
 
 
-        /*
-        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(
-                MainActivity.this, instanceIdResult -> {
-                   String token = instanceIdResult.getToken();
-                });
-         */
-
     }
 
     public void handleRegisterResponse(int responseCode, String token, String username) {
@@ -92,6 +91,7 @@ public class RegisterActivity extends AppCompatActivity {
             Intent intent = new Intent(this, ContactsActivity.class);
             intent.putExtra("username", username);
             intent.putExtra("token", "Bearer " + token);
+            intent.putExtra("appToken", appToken);
             startActivity(intent);
         }
         else {

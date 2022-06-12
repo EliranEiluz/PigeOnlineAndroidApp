@@ -95,5 +95,20 @@ public class ChatsAPI {
         });
     }
 
+    public void declareOnline(String appToken) {
+        Call<Void> declareOnlineCall = this.serviceAPI.declareOnline(appToken, this.token);
+        declareOnlineCall.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+
+            }
+        });
+    }
+
 }
 

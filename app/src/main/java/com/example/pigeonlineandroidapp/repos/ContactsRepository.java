@@ -5,10 +5,10 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.pigeonlineandroidapp.API.ChatsAPI;
 import com.example.pigeonlineandroidapp.API.PostContactParams;
-import com.example.pigeonlineandroidapp.AddContactActivity;
-import com.example.pigeonlineandroidapp.ChatsDao;
-import com.example.pigeonlineandroidapp.LocalDatabase;
-import com.example.pigeonlineandroidapp.MessagesDao;
+import com.example.pigeonlineandroidapp.Activities.AddContactActivity;
+import com.example.pigeonlineandroidapp.DataBase.ChatsDao;
+import com.example.pigeonlineandroidapp.DataBase.LocalDatabase;
+import com.example.pigeonlineandroidapp.DataBase.MessagesDao;
 import com.example.pigeonlineandroidapp.entities.Chat;
 import com.example.pigeonlineandroidapp.entities.Message;
 

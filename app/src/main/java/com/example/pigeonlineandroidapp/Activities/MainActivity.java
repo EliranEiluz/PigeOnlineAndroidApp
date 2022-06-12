@@ -1,8 +1,7 @@
-package com.example.pigeonlineandroidapp;
+package com.example.pigeonlineandroidapp.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.pigeonlineandroidapp.API.UserAPI;
+import com.example.pigeonlineandroidapp.R;
 import com.example.pigeonlineandroidapp.entities.User;
 import com.google.firebase.iid.FirebaseInstanceId;
 

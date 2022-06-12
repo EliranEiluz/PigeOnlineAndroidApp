@@ -1,4 +1,4 @@
-package com.example.pigeonlineandroidapp;
+package com.example.pigeonlineandroidapp.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -6,11 +6,11 @@ import androidx.lifecycle.ViewModelProvider;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.pigeonlineandroidapp.R;
 import com.example.pigeonlineandroidapp.viewModels.ContactsViewModel;
 import com.example.pigeonlineandroidapp.viewModels.ContactsViewModelFactory;
 

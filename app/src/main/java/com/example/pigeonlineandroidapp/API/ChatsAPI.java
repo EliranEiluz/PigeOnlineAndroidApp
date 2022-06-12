@@ -1,17 +1,14 @@
 package com.example.pigeonlineandroidapp.API;
 import android.content.Context;
-import androidx.lifecycle.MutableLiveData;
 
-import com.example.pigeonlineandroidapp.AddContactActivity;
-import com.example.pigeonlineandroidapp.ChatsDao;
-import com.example.pigeonlineandroidapp.R;
+import com.example.pigeonlineandroidapp.Activities.AddContactActivity;
+import com.example.pigeonlineandroidapp.DataBase.ChatsDao;
 import com.example.pigeonlineandroidapp.entities.Chat;
 import com.example.pigeonlineandroidapp.repos.ContactsRepository;
 
 import java.util.List;
 
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;

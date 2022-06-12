@@ -2,18 +2,14 @@ package com.example.pigeonlineandroidapp.repos;
 import android.content.Context;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModelProvider;
 
 
 import com.example.pigeonlineandroidapp.API.MessagesAPI;
-import com.example.pigeonlineandroidapp.ChatsDao;
-import com.example.pigeonlineandroidapp.ContactsActivity;
-import com.example.pigeonlineandroidapp.LocalDatabase;
-import com.example.pigeonlineandroidapp.MessagesDao;
+import com.example.pigeonlineandroidapp.DataBase.ChatsDao;
+import com.example.pigeonlineandroidapp.DataBase.LocalDatabase;
+import com.example.pigeonlineandroidapp.DataBase.MessagesDao;
 import com.example.pigeonlineandroidapp.entities.Chat;
 import com.example.pigeonlineandroidapp.entities.Message;
-import com.example.pigeonlineandroidapp.viewModels.ContactsViewModel;
-import com.example.pigeonlineandroidapp.viewModels.ContactsViewModelFactory;
 
 import java.util.ArrayList;
 import java.util.List;

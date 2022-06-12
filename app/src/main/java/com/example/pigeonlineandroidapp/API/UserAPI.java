@@ -2,9 +2,8 @@ package com.example.pigeonlineandroidapp.API;
 
 import android.content.Context;
 
-import com.example.pigeonlineandroidapp.MainActivity;
-import com.example.pigeonlineandroidapp.R;
-import com.example.pigeonlineandroidapp.RegisterActivity;
+import com.example.pigeonlineandroidapp.Activities.MainActivity;
+import com.example.pigeonlineandroidapp.Activities.RegisterActivity;
 import com.example.pigeonlineandroidapp.entities.User;
 
 

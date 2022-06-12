@@ -1,4 +1,4 @@
-package com.example.pigeonlineandroidapp;
+package com.example.pigeonlineandroidapp.Adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 
+import com.example.pigeonlineandroidapp.R;
 import com.example.pigeonlineandroidapp.entities.Chat;
 
 import java.util.List;

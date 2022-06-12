@@ -2,10 +2,6 @@ package com.example.pigeonlineandroidapp.API;
 
 import android.content.Context;
 
-import com.example.pigeonlineandroidapp.ChatActivity;
-import com.example.pigeonlineandroidapp.ChatsDao;
-import com.example.pigeonlineandroidapp.MessagesDao;
-import com.example.pigeonlineandroidapp.R;
 import com.example.pigeonlineandroidapp.entities.Message;
 import com.example.pigeonlineandroidapp.repos.MessagesRepository;
 

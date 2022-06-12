@@ -23,6 +23,7 @@ public class ContactsActivity extends AppCompatActivity {
     private String username;
     private ListView contactsListView;
     private String token;
+    private int lastPressedChat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +67,7 @@ public class ContactsActivity extends AppCompatActivity {
                 intent.putExtra("chatId", contactsAdapter.getItem(position).getId());
                 intent.putExtra("server", contactsAdapter.getItem(position).getServerURL());
                 intent.putExtra("token", token);
+                lastPressedChat = contactsAdapter.getItem(position).getId();
                 startActivity(intent);
             }
         });
@@ -74,5 +76,11 @@ public class ContactsActivity extends AppCompatActivity {
             contactsAdapter.setData(contacts);
             //contactsAdapter.notifyDataSetChanged();
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        this.contactsViewModel.updateChat(this.lastPressedChat);
     }
 }

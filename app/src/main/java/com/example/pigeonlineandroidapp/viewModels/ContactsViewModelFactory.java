@@ -10,17 +10,15 @@ public class ContactsViewModelFactory implements ViewModelProvider.Factory {
     private String username;
     private Context context;
     private String token;
-    private String appToken;
 
-    public ContactsViewModelFactory(String username, Context context, String token, String appToken) {
+    public ContactsViewModelFactory(String username, Context context, String token) {
         this.username = username;
         this.context = context;
         this.token = token;
-        this.appToken = appToken;
     }
 
     @Override
     public <T extends ViewModel> T create(Class<T> modelClass) {
-        return (T) new ContactsViewModel(username, context, token, appToken);
+        return (T) new ContactsViewModel(username, context, token);
     }
 }

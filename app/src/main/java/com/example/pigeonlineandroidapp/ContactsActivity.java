@@ -10,9 +10,11 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.example.pigeonlineandroidapp.API.ChatsAPI;
 import com.example.pigeonlineandroidapp.entities.Chat;
 import com.example.pigeonlineandroidapp.viewModels.ContactsViewModel;
 import com.example.pigeonlineandroidapp.viewModels.ContactsViewModelFactory;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,9 +37,14 @@ public class ContactsActivity extends AppCompatActivity {
         this.lastPressedChat = -1;
         this.username = intent.getExtras().getString("username");
         this.token = intent.getExtras().getString("token");
-        String appToken = intent.getExtras().getString("appToken");
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(
+                ContactsActivity.this, instanceIdResult -> {
+                    ChatsAPI chatAPI = new ChatsAPI(this.getApplicationContext(),
+                            LocalDatabase.getInstance(this.getApplicationContext()).chatDao(), token);
+                    chatAPI.declareOnline(instanceIdResult.getToken());
+                });
         this.contactsViewModel = new ViewModelProvider(this, new ContactsViewModelFactory
-                (this.username, getApplicationContext(), this.token, appToken)).get(ContactsViewModel.class);
+                (this.username, getApplicationContext(), this.token)).get(ContactsViewModel.class);
         this.contactsListView = findViewById(R.id.contacts_chatsList);
         List<Chat> chats = this.contactsViewModel.get().getValue();
         final ContactsAdapter contactsAdapter = new ContactsAdapter(getApplicationContext(), chats);
@@ -55,7 +62,6 @@ public class ContactsActivity extends AppCompatActivity {
             intentAdd.putExtra("identifiers_list", identifiersLst);
             intentAdd.putExtra("username", this.username);
             intentAdd.putExtra("token", this.token);
-            intentAdd.putExtra("appToken", appToken);
             startActivity(intentAdd);
         });
 
@@ -83,6 +89,7 @@ public class ContactsActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
+        super.onResume();
         if(this.lastPressedChat != -1) {
             super.onResume();
             this.contactsViewModel.updateChat(this.lastPressedChat);

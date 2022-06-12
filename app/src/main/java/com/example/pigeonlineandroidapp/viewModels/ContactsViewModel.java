@@ -13,8 +13,8 @@ public class ContactsViewModel extends ViewModel {
     private ContactsRepository repository;
     private LiveData<List<Chat>> chats;
 
-    public ContactsViewModel(String username, Context context, String token, String appToken) {
-        this.repository = new ContactsRepository(username, context, token, appToken);
+    public ContactsViewModel(String username, Context context, String token) {
+        this.repository = new ContactsRepository(username, context, token);
         this.chats = repository.getAll();
     }
 

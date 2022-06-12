@@ -11,6 +11,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface ServiceAPI {
     @GET("api/contacts")
@@ -26,7 +27,7 @@ public interface ServiceAPI {
     Call<String> postUser(@Body User user);
 
     @POST("api/Users/declare")
-    Call<Void> declareOnline(@Body String appToken, @Header("Authorization") String auth);
+    Call<Void> declareOnline(@Query("token") String appToken, @Header("Authorization") String auth);
 
     @GET("api/contacts/{id}/messages")
     Call<List<Message>> getMessages(@Path("id") String id, @Header("Authorization") String auth);

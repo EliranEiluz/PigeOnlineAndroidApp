@@ -86,4 +86,19 @@ public class ContactsRepository {
             }).start();
         }
     }
+
+    public void update(int id, String lastMessage, String date) {
+        Chat chat = this.chatsDao.getChat(id);
+        chat.setLastMessage(lastMessage);
+        chat.setDate(date);
+        new Thread(() ->{this.chatsDao.insert(chat);}).start();
+        List<Chat> chats = this.chatListData.getValue();
+        for(Chat c : chats) {
+            if(c.getId() == id) {
+                c.setDate(date);
+                c.setLastMessage(lastMessage);
+            }
+        }
+        this.chatListData.setValue(chats);
+    }
 }

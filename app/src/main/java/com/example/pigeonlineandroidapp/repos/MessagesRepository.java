@@ -18,6 +18,7 @@ public class MessagesRepository {
     private LocalDatabase db;
     private MessagesAPI messagesAPI;
     private String contactUsername;
+    private int chatOwnerId;
 
     public MessagesRepository(Context context, int id, String token, String contactUsername) {
         this.db = LocalDatabase.getInstance(context);
@@ -26,6 +27,7 @@ public class MessagesRepository {
         this.messageListData = new MessageListData(id);
         this.messagesAPI.get(contactUsername, this);
         this.contactUsername = contactUsername;
+        this.chatOwnerId = id;
     }
 
     class MessageListData extends MutableLiveData<List<Message>> {
@@ -59,7 +61,7 @@ public class MessagesRepository {
     public void add(Message message, String contactServer) {
         //messagesDao.insert(message);
         this.messagesAPI.transfer(message.getFrom(), this.contactUsername,
-                message.getContent(),contactServer);
+                message.getContent(),contactServer, this, message);
     }
 
     public void handleGetMessages(int responseNum, List<Message> messages) {
@@ -71,16 +73,23 @@ public class MessagesRepository {
         }
     }
 
-    public void handlePostMessage(int responseNum) {
+    public void handlePostMessage(int responseNum, Message message) {
         if(responseNum == 201) {
             List<Message> tempList = this.messageListData.getValue();
-            //tempList.add()
+            tempList.add(message);
+            for(Message m : tempList) {
+                m.setChatOwnerId(this.chatOwnerId);
+            }
+            this.messageListData.setValue(tempList);
+            new Thread(() -> {
+                messagesDao.insert(message);
+            }).start();
         }
     }
 
-    public void afterTransfer(int responseNum, String contactUsername, String content) {
+    public void afterTransfer(int responseNum, String contactUsername, String content, Message message) {
         if(responseNum == 201) {
-            this.messagesAPI.postMessage(contactUsername, content,this);
+            this.messagesAPI.postMessage(contactUsername, content,this, message);
         }
     }
 }

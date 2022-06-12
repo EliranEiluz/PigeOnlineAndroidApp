@@ -3,8 +3,6 @@ package com.example.pigeonlineandroidapp.entities;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import com.example.pigeonlineandroidapp.R;
-
 @Entity
 public class Message {
 
@@ -13,15 +11,13 @@ public class Message {
 
     private String from;
 
-
     private String content;
 
     private String type;
 
     private String date;
 
-
-    private int senderPicture;
+    private String senderPicture;
 
     private int chatOwnerId;
 
@@ -57,11 +53,11 @@ public class Message {
         this.date = date;
     }
 
-    public int getSenderPicture() {
+    public String getSenderPicture() {
         return senderPicture;
     }
 
-    public void setSenderPicture(int senderPicture) {
+    public void setSenderPicture(String senderPicture) {
         this.senderPicture = senderPicture;
     }
 
@@ -89,7 +85,7 @@ public class Message {
         this.from = from;
         this.content = content;
         this.date = date;
-        this.senderPicture = R.drawable.im3;
+        this.senderPicture = "im3";
         this.chatOwnerId = chatOwnerId;
         this.type = type;
     }

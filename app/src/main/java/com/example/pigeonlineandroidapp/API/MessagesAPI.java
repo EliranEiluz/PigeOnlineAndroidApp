@@ -51,27 +51,30 @@ public class MessagesAPI {
         });
     }
 
-    public void postMessage(String contactUsername, String content, MessagesRepository messagesRepository) {
+    public void postMessage(String contactUsername, String content, MessagesRepository messagesRepository, Message message) {
         MessageContent messageContent = new MessageContent();
         messageContent.setContent(content);
         Call<Void> postMessageCall = this.serviceAPI.postMessage(contactUsername, messageContent, this.token);
         postMessageCall.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
-                messagesRepository.handlePostMessage(response.code());
+                messagesRepository.handlePostMessage(response.code(), message);
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                messagesRepository.handlePostMessage(0);
+                messagesRepository.handlePostMessage(0, message);
             }
         });
     }
 
-    public void transfer(String from, String to, String content, String server, MessagesRepository messagesRepository) {
+    public void transfer(String from, String to, String content, String server, MessagesRepository messagesRepository, Message message) {
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
         Retrofit tempRetrofit = new Retrofit.Builder().baseUrl(server).
                 addConverterFactory(ScalarsConverterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create()).build();
+                .addConverterFactory(GsonConverterFactory.create()).client(client).build();
         ServiceAPI tempServiceAPI = tempRetrofit.create(ServiceAPI.class);
         TransferParams transferParams = new TransferParams();
         transferParams.setFrom(from);
@@ -81,12 +84,12 @@ public class MessagesAPI {
         transferCall.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
-                messagesRepository.afterTransfer(response.code(), to, content);
+                messagesRepository.afterTransfer(response.code(), to, content, message);
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                messagesRepository.afterTransfer(0, to, content);
+                messagesRepository.afterTransfer(0, to, content, message);
             }
         });
     }

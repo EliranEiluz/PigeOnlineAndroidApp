@@ -3,6 +3,8 @@ package com.example.pigeonlineandroidapp;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -11,6 +13,7 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.example.pigeonlineandroidapp.entities.Chat;
+import com.example.pigeonlineandroidapp.entities.Message;
 import com.example.pigeonlineandroidapp.viewModels.ContactsViewModel;
 import com.example.pigeonlineandroidapp.viewModels.ContactsViewModelFactory;
 
@@ -27,6 +30,17 @@ public class ContactsActivity extends AppCompatActivity {
     private int lastPressedChat;
     private String defaultServer;
 
+    private class MyBroadcastReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Message message = new Message();
+            Bundle extras = intent.getExtras();
+            message.setFrom(extras.getString("from"));
+            message.setContent(extras.getString("content"));
+            message.setDate(extras.getString("date"));
+            contactsViewModel.updateNewMessage(message, username);
+        }
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         System.out.println("onCreate CONTACTS");

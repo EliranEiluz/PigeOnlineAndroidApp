@@ -8,7 +8,10 @@ import com.example.pigeonlineandroidapp.API.PostContactParams;
 import com.example.pigeonlineandroidapp.AddContactActivity;
 import com.example.pigeonlineandroidapp.ChatsDao;
 import com.example.pigeonlineandroidapp.LocalDatabase;
+import com.example.pigeonlineandroidapp.MessagesDao;
 import com.example.pigeonlineandroidapp.entities.Chat;
+import com.example.pigeonlineandroidapp.entities.Message;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +21,7 @@ public class ContactsRepository {
     private String username;
     private ChatsAPI chatsAPI;
     private LocalDatabase db;
+    private Context context;
 
 
     public ContactsRepository(String username, Context context, String token, String appToken, String defaultServer) {
@@ -28,6 +32,7 @@ public class ContactsRepository {
         this.chatListData = new ChatListData();
         this.chatsAPI.declareOnline(appToken);
         this.chatsAPI.get(this);
+        this.context = context;
     }
 
     class ChatListData extends MutableLiveData<List<Chat>> {
@@ -98,5 +103,22 @@ public class ContactsRepository {
             }
         }
         this.chatListData.setValue(chats);
+    }
+    public void updateNewMessage(Message message, String chatOwner) {
+        String chatWith = message.getFrom();
+        Chat chat = this.chatsDao.getChatByStrings(chatOwner, chatWith);
+        chat.setLastMessage(message.getContent());
+        chat.setDate(message.getDate());
+        new Thread(() -> {this.chatsDao.insert(chat);}).start();
+        List<Chat> chats = this.chatListData.getValue();
+        for(Chat c : chats) {
+            if(c.getId() == chat.getId()) {
+                c.setDate(chat.getDate());
+                c.setLastMessage(chat.getLastMessage());
+            }
+        }
+        this.chatListData.setValue(chats);
+        MessagesDao messagesDao = LocalDatabase.getInstance(this.context).messagesDao();
+        new Thread(() -> {messagesDao.insert(message);}).start();
     }
 }

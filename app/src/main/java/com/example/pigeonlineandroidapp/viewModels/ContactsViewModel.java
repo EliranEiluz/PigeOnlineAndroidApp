@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.pigeonlineandroidapp.AddContactActivity;
 import com.example.pigeonlineandroidapp.entities.Chat;
+import com.example.pigeonlineandroidapp.entities.Message;
 import com.example.pigeonlineandroidapp.repos.ContactsRepository;
 import java.util.List;
 import java.util.Objects;
@@ -28,6 +29,10 @@ public class ContactsViewModel extends ViewModel {
 
     public void updateChat(int id) {
         this.repository.update(id);
+    }
+
+    public void updateNewMessage(Message message, String chatOwner) {
+        this.repository.updateNewMessage(message, chatOwner);
     }
 
 }

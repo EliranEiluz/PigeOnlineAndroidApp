@@ -39,6 +39,11 @@ public class MainActivity extends AppCompatActivity {
             intent.putExtra("defaultServer", this.defaultServer);
             startActivity(intent);
         });
+        Button settingsBtn = findViewById(R.id.main_settings_btn);
+        settingsBtn.setOnClickListener(view -> {
+            Intent intent = new Intent(this, SettingsActivity.class);
+            startActivity(intent);
+        });
 
         Button loginBtn = findViewById(R.id.main_login_btn);
         loginBtn.setOnClickListener(view -> {

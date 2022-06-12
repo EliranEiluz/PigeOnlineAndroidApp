@@ -2,12 +2,18 @@ package com.example.pigeonlineandroidapp.repos;
 import android.content.Context;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModelProvider;
 
 
 import com.example.pigeonlineandroidapp.API.MessagesAPI;
+import com.example.pigeonlineandroidapp.ChatsDao;
+import com.example.pigeonlineandroidapp.ContactsActivity;
 import com.example.pigeonlineandroidapp.LocalDatabase;
 import com.example.pigeonlineandroidapp.MessagesDao;
+import com.example.pigeonlineandroidapp.entities.Chat;
 import com.example.pigeonlineandroidapp.entities.Message;
+import com.example.pigeonlineandroidapp.viewModels.ContactsViewModel;
+import com.example.pigeonlineandroidapp.viewModels.ContactsViewModelFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,8 +25,11 @@ public class MessagesRepository {
     private MessagesAPI messagesAPI;
     private String contactUsername;
     private int chatOwnerId;
+    private String username;
+    private String token;
+    private Context context;
 
-    public MessagesRepository(Context context, int id, String token, String contactUsername) {
+    public MessagesRepository(Context context, int id, String token, String contactUsername, String username) {
         this.db = LocalDatabase.getInstance(context);
         this.messagesDao = db.messagesDao();
         this.messagesAPI = new MessagesAPI(context, token);
@@ -28,6 +37,9 @@ public class MessagesRepository {
         this.messagesAPI.get(contactUsername, this);
         this.contactUsername = contactUsername;
         this.chatOwnerId = id;
+        this.token = token;
+        this.username = username;
+        this.context = context;
     }
 
     class MessageListData extends MutableLiveData<List<Message>> {
@@ -84,6 +96,12 @@ public class MessagesRepository {
             new Thread(() -> {
                 messagesDao.insert(message);
             }).start();
+
+
+            ContactsViewModel contactsViewModel = new ViewModelProvider(new ContactsActivity(), new ContactsViewModelFactory
+                    (this.username, this.context, this.token)).get(ContactsViewModel.class);
+            contactsViewModel.updateChat(this.chatOwnerId, message.getContent(), message.getDate());
+
         }
     }
 

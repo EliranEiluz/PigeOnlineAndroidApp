@@ -24,6 +24,8 @@ import java.util.List;
 public class ChatActivity extends AppCompatActivity {
     private MessagesViewModel messagesViewModel;
     private ListView messagesLV;
+    private String token;
+    private String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,11 +33,10 @@ public class ChatActivity extends AppCompatActivity {
         setContentView(R.layout.activity_chat);
 
         Intent intent = getIntent();
-        String currentUsername = intent.getExtras().getString("currentUsername");
+        this.username = intent.getExtras().getString("currentUsername");
         String contactUsername = intent.getExtras().getString("contactUsername");
-        String token = intent.getExtras().getString("token");
+        this.token = intent.getExtras().getString("token");
         String contactDisplayName = intent.getExtras().getString("contactDisplayName");
-        //int chatID = Integer.parseInt(intent.getExtras().getString("chatId"));
         int chatID = intent.getExtras().getInt("chatId");
 
         TextView displayNameTV = findViewById(R.id.chat_displayName);
@@ -44,10 +45,12 @@ public class ChatActivity extends AppCompatActivity {
         this.messagesViewModel = new ViewModelProvider(this, new MessagesViewModelFactory
                 (chatID, getApplicationContext(), token)).get(MessagesViewModel.class);
 
+        // set the chat in the repository when push contact.
+        messagesViewModel.setNewChat(chatID);
         this.messagesLV = findViewById(R.id.chat_messagesList);
         List<Message> messages = this.messagesViewModel.get().getValue();
         final MessagesAdapter messagesAdapter = new MessagesAdapter(getApplicationContext(),
-                messages, currentUsername);
+                messages, this.username);
         this.messagesLV.setAdapter(messagesAdapter);
 
         Button sendBtn = findViewById(R.id.send_button);
@@ -59,7 +62,7 @@ public class ChatActivity extends AppCompatActivity {
 
             Date date = new Date();
             SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-            this.messagesViewModel.add(new Message(currentUsername,
+            this.messagesViewModel.add(new Message(this.username,
                     messageEt.getText().toString(),
                     formatter.format(date), chatID));
 

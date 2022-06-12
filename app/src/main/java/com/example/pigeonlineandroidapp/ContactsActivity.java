@@ -31,7 +31,7 @@ public class ContactsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contacts);
         Intent intent = getIntent();
-
+        this.lastPressedChat = -1;
         this.username = intent.getExtras().getString("username");
         this.token = intent.getExtras().getString("token");
         this.contactsViewModel = new ViewModelProvider(this, new ContactsViewModelFactory
@@ -80,7 +80,10 @@ public class ContactsActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        super.onResume();
-        this.contactsViewModel.updateChat(this.lastPressedChat);
+        if(this.lastPressedChat != -1) {
+            super.onResume();
+            this.contactsViewModel.updateChat(this.lastPressedChat);
+            this.lastPressedChat = -1;
+        }
     }
 }

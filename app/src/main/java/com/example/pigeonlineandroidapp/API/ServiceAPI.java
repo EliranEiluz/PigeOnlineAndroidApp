@@ -33,9 +33,9 @@ public interface ServiceAPI {
                            @Header("Authorization") String auth);
 
     @POST("api/transfer")
-    Call<Void> transfer(@Body TransferParams transferParams, @Header("Authorization") String auth);
+    Call<Void> transfer(@Body TransferParams transferParams);
 
     @POST("api/invitations")
-    Call<Void> getInvitation(@Body InvitationParams invitationParams, @Header("Authorization") String auth);
+    Call<Void> getInvitation(@Body InvitationParams invitationParams);
 
 }

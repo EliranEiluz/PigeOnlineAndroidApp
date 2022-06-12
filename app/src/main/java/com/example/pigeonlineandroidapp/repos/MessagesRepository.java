@@ -70,4 +70,17 @@ public class MessagesRepository {
             }).start();
         }
     }
+
+    public void handlePostMessage(int responseNum) {
+        if(responseNum == 201) {
+            List<Message> tempList = this.messageListData.getValue();
+            //tempList.add()
+        }
+    }
+
+    public void afterTransfer(int responseNum, String contactUsername, String content) {
+        if(responseNum == 201) {
+            this.messagesAPI.postMessage(contactUsername, content,this);
+        }
+    }
 }

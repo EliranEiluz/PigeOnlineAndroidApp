@@ -36,8 +36,8 @@ public class MessagesAPI {
         this.token = token;
     }
 
-    public void get(String username, MessagesRepository messagesRepository) {
-        Call<List<Message>> getMessagesCall = this.serviceAPI.getMessages(username, this.token);
+    public void get(String contactUsername, MessagesRepository messagesRepository) {
+        Call<List<Message>> getMessagesCall = this.serviceAPI.getMessages(contactUsername, this.token);
         getMessagesCall.enqueue(new Callback<List<Message>>() {
             @Override
             public void onResponse(Call<List<Message>> call, Response<List<Message>> response) {
@@ -51,7 +51,43 @@ public class MessagesAPI {
         });
     }
 
-    public void postMessage() {
+    public void postMessage(String contactUsername, String content, MessagesRepository messagesRepository) {
+        MessageContent messageContent = new MessageContent();
+        messageContent.setContent(content);
+        Call<Void> postMessageCall = this.serviceAPI.postMessage(contactUsername, messageContent, this.token);
+        postMessageCall.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                messagesRepository.handlePostMessage(response.code());
+            }
 
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                messagesRepository.handlePostMessage(0);
+            }
+        });
+    }
+
+    public void transfer(String from, String to, String content, String server, MessagesRepository messagesRepository) {
+        Retrofit tempRetrofit = new Retrofit.Builder().baseUrl(server).
+                addConverterFactory(ScalarsConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create()).build();
+        ServiceAPI tempServiceAPI = tempRetrofit.create(ServiceAPI.class);
+        TransferParams transferParams = new TransferParams();
+        transferParams.setFrom(from);
+        transferParams.setTo(to);
+        transferParams.setContent(content);
+        Call<Void> transferCall = tempServiceAPI.transfer(transferParams);
+        transferCall.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                messagesRepository.afterTransfer(response.code(), to, content);
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                messagesRepository.afterTransfer(0, to, content);
+            }
+        });
     }
 }

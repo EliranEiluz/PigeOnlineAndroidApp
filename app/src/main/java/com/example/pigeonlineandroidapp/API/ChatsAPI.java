@@ -81,7 +81,7 @@ public class ChatsAPI {
         Retrofit tempRetro = new Retrofit.Builder().baseUrl(server).
                 addConverterFactory(GsonConverterFactory.create()).build();
         ServiceAPI tempServiceAPI = tempRetro.create(ServiceAPI.class);
-        Call<Void> invitationCall = tempServiceAPI.getInvitation(invitationParams, this.token);
+        Call<Void> invitationCall = tempServiceAPI.getInvitation(invitationParams);
         invitationCall.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {

@@ -64,6 +64,7 @@ public class ContactsActivity extends AppCompatActivity {
                 intent.putExtra("contactUsername", contactsAdapter.getItem(position).getChatWith());
                 intent.putExtra("contactDisplayName", contactsAdapter.getItem(position).getDisplayName());
                 intent.putExtra("chatId", contactsAdapter.getItem(position).getId());
+                intent.putExtra("server", contactsAdapter.getItem(position).getServerURL());
                 intent.putExtra("token", token);
                 startActivity(intent);
             }

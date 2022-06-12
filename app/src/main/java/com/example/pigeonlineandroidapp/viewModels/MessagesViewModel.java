@@ -20,15 +20,16 @@ public class MessagesViewModel extends ViewModel {
     public LiveData<List<Message>> get() {
         return this.messages;
     }
-
+/*
     public void setNewChat(int id) {
         this.repository.setMessageListData(id);
     }
     public void setContact(String contact) {
         this.repository.setContact(contact);
     }
+ */
 
-    public void add(Message message) {
-        repository.add(message);
+    public void add(Message message, String contactServer) {
+        this.repository.add(message, contactServer);
     }
 }

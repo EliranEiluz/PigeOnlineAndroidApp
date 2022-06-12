@@ -17,6 +17,7 @@ public class MessagesRepository {
     private MessagesRepository.MessageListData messageListData;
     private LocalDatabase db;
     private MessagesAPI messagesAPI;
+    private String contactUsername;
 
     public MessagesRepository(Context context, int id, String token, String contactUsername) {
         this.db = LocalDatabase.getInstance(context);
@@ -24,6 +25,7 @@ public class MessagesRepository {
         this.messagesAPI = new MessagesAPI(context, token);
         this.messageListData = new MessageListData(id);
         this.messagesAPI.get(contactUsername, this);
+        this.contactUsername = contactUsername;
     }
 
     class MessageListData extends MutableLiveData<List<Message>> {
@@ -45,12 +47,19 @@ public class MessagesRepository {
         return this.messageListData;
     }
 
+    /*
     public void setMessageListData(int id) {
         this.messageListData = new MessageListData(id);
     }
+    public void setContact(String contact) {
+        this.contactUsername = contact;
+    }
+    */
 
-    public void add(Message message) {
-        messagesDao.insert(message);
+    public void add(Message message, String contactServer) {
+        //messagesDao.insert(message);
+        this.messagesAPI.transfer(message.getFrom(), this.contactUsername,
+                message.getContent(),contactServer);
     }
 
     public void handleGetMessages(int responseNum, List<Message> messages) {

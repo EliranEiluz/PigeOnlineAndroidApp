@@ -26,6 +26,7 @@ public class ChatActivity extends AppCompatActivity {
     private ListView messagesLV;
     private String token;
     private String username;
+    private String contactServer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +37,7 @@ public class ChatActivity extends AppCompatActivity {
         this.username = intent.getExtras().getString("currentUsername");
         String contactUsername = intent.getExtras().getString("contactUsername");
         this.token = intent.getExtras().getString("token");
+        this.contactServer = intent.getExtras().getString("server");
         String contactDisplayName = intent.getExtras().getString("contactDisplayName");
         int chatID = intent.getExtras().getInt("chatId");
 
@@ -45,9 +47,11 @@ public class ChatActivity extends AppCompatActivity {
         this.messagesViewModel = new ViewModelProvider(this, new MessagesViewModelFactory
                 (chatID, getApplicationContext(), token, contactUsername)).get(MessagesViewModel.class);
 
+        /*
         // set the chatId and the contact in the repository when push contact.
         messagesViewModel.setNewChat(chatID);
         messagesViewModel.setContact(contactUsername);
+         */
 
         this.messagesLV = findViewById(R.id.chat_messagesList);
         List<Message> messages = this.messagesViewModel.get().getValue();
@@ -66,7 +70,7 @@ public class ChatActivity extends AppCompatActivity {
             SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
             this.messagesViewModel.add(new Message(this.username,
                     messageEt.getText().toString(),
-                    formatter.format(date), chatID, "text"));
+                    formatter.format(date), chatID, "text"), this.contactServer);
 
         });
 

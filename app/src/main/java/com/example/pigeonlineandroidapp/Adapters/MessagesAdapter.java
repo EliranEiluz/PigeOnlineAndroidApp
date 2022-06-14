@@ -39,12 +39,10 @@ public class MessagesAdapter extends ArrayAdapter<Message> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         Message message = getItem(position);
-        if (convertView == null) {
-            if(message.getFrom().equals(this.currentUsr)) {
-                convertView = inflater.inflate(R.layout.rmessage_item, parent, false);
-            } else {
-                convertView = inflater.inflate(R.layout.lmessage_item, parent, false);
-            }
+        if(message.getFrom().equals(this.currentUsr)) {
+            convertView = inflater.inflate(R.layout.rmessage_item, parent, false);
+        } else {
+            convertView = inflater.inflate(R.layout.lmessage_item, parent, false);
         }
         TextView content = convertView.findViewById(R.id.message_content);
         content.setText(message.getContent());

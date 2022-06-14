@@ -85,9 +85,7 @@ public class MessagesRepository {
         if(responseNum == 201) {
             List<Message> tempList = this.messageListData.getValue();
             tempList.add(message);
-            for(Message m : tempList) {
-                m.setChatOwnerId(this.chatOwnerId);
-            }
+
             this.messageListData.setValue(tempList);
             new Thread(() -> {
                 messagesDao.insert(message);

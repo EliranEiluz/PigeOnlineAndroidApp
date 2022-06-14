@@ -13,6 +13,8 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.example.pigeonlineandroidapp.API.ServiceAPI;
+import com.example.pigeonlineandroidapp.API.UserAPI;
 import com.example.pigeonlineandroidapp.Adapters.ContactsAdapter;
 import com.example.pigeonlineandroidapp.R;
 import com.example.pigeonlineandroidapp.entities.Chat;
@@ -115,5 +117,12 @@ public class ContactsActivity extends AppCompatActivity {
         intentFilter.addAction("onMessageReceived");
         BroadcastInContacts receiver = new BroadcastInContacts();
         registerReceiver(receiver, intentFilter);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        UserAPI api = new UserAPI(this.getApplicationContext(), this.defaultServer);
+        api.declareOffline(this.username);
     }
 }

@@ -26,6 +26,9 @@ public interface ServiceAPI {
     @POST("/api/Users")
     Call<String> postUser(@Body User user);
 
+    @POST("/api/Users/offline")
+    Call<Void> offline(@Query("username") String username);
+
     @POST("/api/Users/declare")
     Call<Void> declareOnline(@Query("token") String appToken, @Header("Authorization") String auth);
 

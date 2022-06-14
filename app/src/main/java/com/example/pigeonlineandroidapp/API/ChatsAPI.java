@@ -73,7 +73,7 @@ public class ChatsAPI {
         InvitationParams invitationParams = new InvitationParams();
         invitationParams.setTo(to);
         invitationParams.setFrom(from);
-        invitationParams.setServer(server);
+        invitationParams.setServer("http://127.0.0.1:5010");
         Retrofit tempRetro = new Retrofit.Builder().baseUrl(server).
                 addConverterFactory(GsonConverterFactory.create()).build();
         ServiceAPI tempServiceAPI = tempRetro.create(ServiceAPI.class);

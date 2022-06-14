@@ -14,32 +14,32 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface ServiceAPI {
-    @GET("api/contacts")
+    @GET("/api/contacts")
     Call<List<Chat>> getChats(@Header("Authorization") String auth);
 
-    @POST("api/contacts")
+    @POST("/api/contacts")
     Call<Void> postChat(@Body PostContactParams params, @Header("Authorization") String auth);
 
-    @POST("api/Users/Login")
+    @POST("/api/Users/Login")
     Call<User> Login(@Body UserValidation userValidation);
 
-    @POST("api/Users")
+    @POST("/api/Users")
     Call<String> postUser(@Body User user);
 
-    @POST("api/Users/declare")
+    @POST("/api/Users/declare")
     Call<Void> declareOnline(@Query("token") String appToken, @Header("Authorization") String auth);
 
-    @GET("api/contacts/{id}/messages")
+    @GET("/api/contacts/{id}/messages")
     Call<List<Message>> getMessages(@Path("id") String id, @Header("Authorization") String auth);
 
-    @POST("api/contacts/{id}/messages")
+    @POST("/api/contacts/{id}/messages")
     Call<Void> postMessage(@Path("id") String id, @Body MessageContent messageContent,
                            @Header("Authorization") String auth);
 
-    @POST("api/transfer")
+    @POST("/api/transfer")
     Call<Void> transfer(@Body TransferParams transferParams);
 
-    @POST("api/invitations")
+    @POST("/api/invitations")
     Call<Void> getInvitation(@Body InvitationParams invitationParams);
 
 }

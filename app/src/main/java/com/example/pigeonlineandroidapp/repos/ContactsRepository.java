@@ -9,6 +9,7 @@ import com.example.pigeonlineandroidapp.Activities.AddContactActivity;
 import com.example.pigeonlineandroidapp.DataBase.ChatsDao;
 import com.example.pigeonlineandroidapp.DataBase.LocalDatabase;
 import com.example.pigeonlineandroidapp.DataBase.MessagesDao;
+import com.example.pigeonlineandroidapp.R;
 import com.example.pigeonlineandroidapp.entities.Chat;
 import com.example.pigeonlineandroidapp.entities.Message;
 
@@ -73,6 +74,9 @@ public class ContactsRepository {
             PostContactParams postContactParams = new PostContactParams();
             postContactParams.setId(to);
             postContactParams.setName(name);
+            if(server.equals("http://10.0.2.2:5010")) {
+                server = "http://127.0.0.1:5010";
+            }
             postContactParams.setServer(server);
             chatsAPI.post(postContactParams, this, this.username, addContactActivity);
         }

@@ -105,6 +105,7 @@ public class ContactsActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
+        super.onResume();
         if(this.lastPressedChat != -1) {
             super.onResume();
             this.contactsViewModel.updateChat(this.lastPressedChat);

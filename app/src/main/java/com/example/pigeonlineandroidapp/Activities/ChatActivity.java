@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.text.format.DateUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -76,6 +77,7 @@ public class ChatActivity extends AppCompatActivity {
         final MessagesAdapter messagesAdapter = new MessagesAdapter(getApplicationContext(),
                 messages, this.username);
         this.messagesLV.setAdapter(messagesAdapter);
+        this.messagesLV.setSelection(messagesAdapter.getCount() - 1);
 
         Button sendBtn = findViewById(R.id.send_button);
         EditText messageEt = findViewById(R.id.message_input);
@@ -83,17 +85,18 @@ public class ChatActivity extends AppCompatActivity {
             if (messageEt.getText().toString().equals("")) {
                 return;
             }
-
             Date date = new Date();
             SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
             this.messagesViewModel.add(new Message(this.username,
                     messageEt.getText().toString(),
                     formatter.format(date), chatID, "text"), this.contactServer);
-
+            messageEt.setText("");
+            this.messagesLV.setSelection(messagesAdapter.getCount() - 1);
         });
 
         this.messagesViewModel.get().observe(this, allMessages -> {
             messagesAdapter.setData(allMessages);
+            this.messagesLV.setSelection(messagesAdapter.getCount() - 1);
             //messagesAdapter.notifyDataSetChanged();
         });
 

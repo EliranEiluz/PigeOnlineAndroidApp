@@ -47,7 +47,8 @@
             android:layout_height="match_parent"
             tools:listitem="@layout/lmessage_item"
             android:divider="@android:color/transparent"
-            android:dividerHeight="10.0sp">
+            android:dividerHeight="10.0sp"
+            android:layout_marginBottom="60dp">
         </ListView>
 
     </LinearLayout>

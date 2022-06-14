@@ -100,10 +100,13 @@ public class RegisterActivity extends AppCompatActivity {
             passwordET.setText("");
             valET.setText("");
             displayET.setText("");
+            TextView warningMessage = findViewById(R.id.register_warning_message);
+            warningMessage.setVisibility(View.INVISIBLE);
             Intent intent = new Intent(this, ContactsActivity.class);
             intent.putExtra("username", username);
             intent.putExtra("token", "Bearer " + token);
             intent.putExtra("appToken", appToken);
+            intent.putExtra("defaultServer", this.defaultServer);
             startActivity(intent);
         }
         else {

@@ -75,6 +75,8 @@ public class MainActivity extends AppCompatActivity {
             EditText passwordET = findViewById(R.id.main_password);
             userNameET.setText("");
             passwordET.setText("");
+            TextView warningMessage = findViewById(R.id.main_warning_message);
+            warningMessage.setVisibility(View.INVISIBLE);
             Intent intent = new Intent(this, ContactsActivity.class);
             intent.putExtra("username", userName);
             intent.putExtra("token", "Bearer " + this.token);

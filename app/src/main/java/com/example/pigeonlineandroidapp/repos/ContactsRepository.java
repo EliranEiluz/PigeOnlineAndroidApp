@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.pigeonlineandroidapp.API.ChatsAPI;
+import com.example.pigeonlineandroidapp.API.InvitationParams;
 import com.example.pigeonlineandroidapp.API.PostContactParams;
 import com.example.pigeonlineandroidapp.Activities.AddContactActivity;
 import com.example.pigeonlineandroidapp.DataBase.ChatsDao;
@@ -23,6 +24,7 @@ public class ContactsRepository {
     private ChatsAPI chatsAPI;
     private LocalDatabase db;
     private Context context;
+    private String defaultServer;
 
 
     public ContactsRepository(String username, Context context, String token, String appToken, String defaultServer) {
@@ -34,6 +36,7 @@ public class ContactsRepository {
         this.chatsAPI.declareOnline(appToken);
         this.chatsAPI.get(this);
         this.context = context;
+        this.defaultServer = defaultServer;
     }
 
     class ChatListData extends MutableLiveData<List<Chat>> {
@@ -51,7 +54,19 @@ public class ContactsRepository {
     }
 
     public void add(String from, String to, String server, String displayName, AddContactActivity addContactActivity) {
-        chatsAPI.sendInvitation(to, from, server, displayName, this, addContactActivity);
+        InvitationParams invitationParams = new InvitationParams();
+        invitationParams.setTo(to);
+        invitationParams.setFrom(from);
+        if(this.defaultServer.equals("http://10.0.2.2:5010")) {
+            invitationParams.setServer("http://127.0.0.1:5010");
+        }
+        else {
+            invitationParams.setServer(this.defaultServer);
+        }
+        if(server.equals("http://127.0.0.1:5010") || server.equals("http://localhost:5010")) {
+            server = "http://10.0.2.2:5010";
+        }
+        chatsAPI.sendInvitation(invitationParams, server, displayName, this, addContactActivity);
 
     }
 

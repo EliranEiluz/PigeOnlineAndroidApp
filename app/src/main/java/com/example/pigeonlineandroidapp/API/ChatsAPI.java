@@ -23,6 +23,7 @@ public class ChatsAPI {
     private ChatsDao chatsDao;
     private Retrofit retrofit;
     private String token;
+    private String defaultServer;
 
     public ChatsAPI(Context context, ChatsDao chatsDao, String token, String defaultServer) {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
@@ -34,6 +35,7 @@ public class ChatsAPI {
         this.serviceAPI = retrofit.create(ServiceAPI.class);
         this.chatsDao = chatsDao;
         this.token = token;
+        this.defaultServer = defaultServer;
     }
 
     public void get(ContactsRepository repository) {
@@ -50,6 +52,7 @@ public class ChatsAPI {
             }
         });
     }
+
 
     public void post(PostContactParams postContactParams, ContactsRepository contactsRepository, String username, AddContactActivity addContactActivity) {
         Call<Void> postContactCall = serviceAPI.postChat(postContactParams, this.token);
@@ -69,11 +72,7 @@ public class ChatsAPI {
 
     }
 
-    public void sendInvitation(String to, String from, String server, String name,ContactsRepository contactsRepository, AddContactActivity addContactActivity) {
-        InvitationParams invitationParams = new InvitationParams();
-        invitationParams.setTo(to);
-        invitationParams.setFrom(from);
-        invitationParams.setServer("http://127.0.0.1:5010");
+    public void sendInvitation(InvitationParams invitationParams, String server, String name ,ContactsRepository contactsRepository, AddContactActivity addContactActivity) {
         Retrofit tempRetro = new Retrofit.Builder().baseUrl(server).
                 addConverterFactory(GsonConverterFactory.create()).build();
         ServiceAPI tempServiceAPI = tempRetro.create(ServiceAPI.class);
@@ -81,12 +80,12 @@ public class ChatsAPI {
         invitationCall.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
-                contactsRepository.afterInvitationHandler(response.code(), to, name, server, addContactActivity);
+                contactsRepository.afterInvitationHandler(response.code(), invitationParams.getTo(), name, server, addContactActivity);
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                contactsRepository.afterInvitationHandler(0, to, name, server, addContactActivity);
+                contactsRepository.afterInvitationHandler(0, invitationParams.getTo(), name, server, addContactActivity);
             }
         });
     }

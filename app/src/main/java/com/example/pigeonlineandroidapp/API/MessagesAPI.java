@@ -65,6 +65,9 @@ public class MessagesAPI {
     }
 
     public void transfer(String from, String to, String content, String server, MessagesRepository messagesRepository, Message message) {
+        if(server.equals("http://127.0.0.1:5010") || server.equals("http://localhost:5010")) {
+            server = "http://10.0.2.2:5010";
+        }
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();

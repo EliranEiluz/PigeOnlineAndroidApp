@@ -28,7 +28,7 @@
             android:textSize="20sp"
             android:fontFamily="sans-serif"
             android:textStyle="bold"
-            android:textColor="@color/envelope_color"/>
+            android:textColor="?colorSecondary"/>
         <TextView
             android:id="@+id/main_warning_message"
             android:layout_width="wrap_content"
@@ -39,7 +39,7 @@
             android:fontFamily="sans-serif"
             android:textStyle="bold"
             android:visibility="invisible"
-            android:textColor="@color/warning_red"/>
+            android:textColor="?colorOnError"/>
 
 
         <EditText
@@ -52,8 +52,8 @@
             app:layout_constraintTop_toTopOf="parent"
             android:background="@drawable/text_login"
             android:padding="10dp"
-            android:textColorHint="@color/envelope_color"
-            android:textColor="@color/background_logo_color"
+            android:textColorHint="?colorSecondary"
+            android:textColor="?colorOnPrimary"
             />
             <EditText
                 android:id="@+id/main_password"
@@ -65,8 +65,8 @@
                 android:hint="Password"
                 android:inputType="textPassword"
                 android:background="@drawable/text_login"
-                android:textColorHint="@color/envelope_color"
-                android:textColor="@color/background_logo_color"
+                android:textColorHint="?colorSecondary"
+                android:textColor="?colorOnPrimary"
                 android:layout_marginBottom="20dp"/>
         <LinearLayout
             android:layout_width="wrap_content"
@@ -90,7 +90,7 @@
             android:fontFamily="sans-serif"
             android:textStyle="bold"
             android:layout_marginRight="60dp"
-            android:textColor="@color/background_logo_color"
+            android:textColor="?colorOnPrimary"
             android:background="@mipmap/settings_button_icon"/>
         <Button
             android:id="@+id/main_register_btn"
@@ -100,7 +100,7 @@
             android:text="Register"
             android:fontFamily="sans-serif"
             android:textStyle="bold"
-            android:textColor="@color/background_logo_color"
+            android:textColor="?colorOnPrimary"
             android:background="@drawable/register_btn"/>
         </LinearLayout>
     </LinearLayout>

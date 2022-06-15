@@ -28,7 +28,7 @@
             android:textSize="20sp"
             android:fontFamily="sans-serif"
             android:textStyle="bold"
-            android:textColor="@color/envelope_color"/>
+            android:textColor="?colorSecondary"/>
         <TextView
             android:id="@+id/register_warning_message"
             android:layout_width="wrap_content"
@@ -38,7 +38,7 @@
             android:fontFamily="sans-serif"
             android:textStyle="bold"
             android:visibility="invisible"
-            android:textColor="@color/warning_red"/>
+            android:textColor="?colorOnError"/>
 
         <EditText
             android:id="@+id/register_username"
@@ -50,8 +50,8 @@
             app:layout_constraintTop_toTopOf="parent"
             android:background="@drawable/text_login"
             android:padding="10dp"
-            android:textColorHint="@color/envelope_color"
-            android:textColor="@color/background_logo_color"
+            android:textColorHint="?colorSecondary"
+            android:textColor="?colorOnPrimary"
             />
         <EditText
             android:id="@+id/register_password"
@@ -63,8 +63,8 @@
             android:hint="Password"
             android:inputType="textPassword"
             android:background="@drawable/text_login"
-            android:textColorHint="@color/envelope_color"
-            android:textColor="@color/background_logo_color"
+            android:textColorHint="?colorSecondary"
+            android:textColor="?colorOnPrimary"
             android:layout_marginBottom="15dp"/>
         <EditText
             android:id="@+id/register_validatePass"
@@ -77,8 +77,8 @@
             app:layout_constraintTop_toTopOf="parent"
             android:background="@drawable/text_login"
             android:padding="10dp"
-            android:textColorHint="@color/envelope_color"
-            android:textColor="@color/background_logo_color"
+            android:textColorHint="?colorSecondary"
+            android:textColor="?colorOnPrimary"
             />
         <EditText
             android:id="@+id/register_displayName"
@@ -90,8 +90,8 @@
             app:layout_constraintTop_toTopOf="parent"
             android:background="@drawable/text_login"
             android:padding="10dp"
-            android:textColorHint="@color/envelope_color"
-            android:textColor="@color/background_logo_color"
+            android:textColorHint="?colorSecondary"
+            android:textColor="?colorOnPrimary"
             />
         <Button
             android:id="@+id/register_addImage"
@@ -123,7 +123,7 @@
                 android:text="@string/login"
                 android:fontFamily="sans-serif"
                 android:textStyle="bold"
-                android:textColor="@color/background_logo_color"
+                android:textColor="?colorOnPrimary"
                 android:background="@drawable/register_btn"/>
         </LinearLayout>
     </LinearLayout>

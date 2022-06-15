@@ -12,4 +12,18 @@
     <color name="envelope_color">#169E62</color>
     <color name="background_logo_color">#E3E4F6</color>
     <color name="warning_red">#FF0F0F</color>
+    <color name="lborderM">#39E0F0</color>
+    <color name="rborderM">#12FD30</color>
+    <color name="backM">#E3E4F6</color>
+    <color name="txtM">#FF000000</color>
+
+    <color name="Nstart_color">#03034E</color>
+    <color name="Nend_color">#0404A3</color>
+    <color name="Nenvelope_color">#C3B328</color>
+    <color name="Nbackground_logo_color">#E3E4F6</color>
+    <color name="Nwarning_red">#B60707</color>
+    <color name="NlborderM">#E8D744</color>
+    <color name="NrborderM">#B80615</color>
+    <color name="NbackM">#313579</color>
+    <color name="NtxtM">#E3E4F6</color>
 </resources>

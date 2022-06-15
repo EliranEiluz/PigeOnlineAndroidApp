@@ -3,17 +3,23 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/benle/Documents/AndroidStudioProjects/PigeOnlineAndroidApp/app/src/main/res/drawable/background_color.xml" value="0.2595" />
         <entry key="..\:/Users/benle/Documents/AndroidStudioProjects/PigeOnlineAndroidApp/app/src/main/res/drawable/contact_border.xml" value="0.2265" />
+        <entry key="..\:/Users/benle/Documents/AndroidStudioProjects/PigeOnlineAndroidApp/app/src/main/res/drawable/ic_launcher_background.xml" value="0.245" />
+        <entry key="..\:/Users/benle/Documents/AndroidStudioProjects/PigeOnlineAndroidApp/app/src/main/res/drawable/light_mode_btn.xml" value="0.245" />
         <entry key="..\:/Users/benle/Documents/AndroidStudioProjects/PigeOnlineAndroidApp/app/src/main/res/drawable/lmessage_border.xml" value="0.2265" />
         <entry key="..\:/Users/benle/Documents/AndroidStudioProjects/PigeOnlineAndroidApp/app/src/main/res/drawable/message_border.xml" value="0.2265" />
+        <entry key="..\:/Users/benle/Documents/AndroidStudioProjects/PigeOnlineAndroidApp/app/src/main/res/drawable/night_mode_btn.xml" value="0.245" />
         <entry key="..\:/Users/benle/Documents/AndroidStudioProjects/PigeOnlineAndroidApp/app/src/main/res/drawable/register_btn.xml" value="0.2265" />
         <entry key="..\:/Users/benle/Documents/AndroidStudioProjects/PigeOnlineAndroidApp/app/src/main/res/drawable/rmessage_border.xml" value="0.2265" />
+        <entry key="..\:/Users/benle/Documents/AndroidStudioProjects/PigeOnlineAndroidApp/app/src/main/res/drawable/rounded_btn.xml" value="0.245" />
+        <entry key="..\:/Users/benle/Documents/AndroidStudioProjects/PigeOnlineAndroidApp/app/src/main/res/drawable/text_login.xml" value="0.245" />
         <entry key="..\:/Users/benle/Documents/AndroidStudioProjects/PigeOnlineAndroidApp/app/src/main/res/layout/activity_add_contact.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/benle/Documents/AndroidStudioProjects/PigeOnlineAndroidApp/app/src/main/res/layout/activity_chat.xml" value="0.264" />
         <entry key="..\:/Users/benle/Documents/AndroidStudioProjects/PigeOnlineAndroidApp/app/src/main/res/layout/activity_contacts.xml" value="0.2" />
-        <entry key="..\:/Users/benle/Documents/AndroidStudioProjects/PigeOnlineAndroidApp/app/src/main/res/layout/activity_main.xml" value="0.2" />
+        <entry key="..\:/Users/benle/Documents/AndroidStudioProjects/PigeOnlineAndroidApp/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/Users/benle/Documents/AndroidStudioProjects/PigeOnlineAndroidApp/app/src/main/res/layout/activity_register.xml" value="0.18432971014492755" />
-        <entry key="..\:/Users/benle/Documents/AndroidStudioProjects/PigeOnlineAndroidApp/app/src/main/res/layout/activity_settings.xml" value="0.264" />
+        <entry key="..\:/Users/benle/Documents/AndroidStudioProjects/PigeOnlineAndroidApp/app/src/main/res/layout/activity_settings.xml" value="0.2" />
         <entry key="..\:/Users/benle/Documents/AndroidStudioProjects/PigeOnlineAndroidApp/app/src/main/res/layout/contact_item.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/benle/Documents/AndroidStudioProjects/PigeOnlineAndroidApp/app/src/main/res/layout/lmessage_item.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/benle/Documents/AndroidStudioProjects/PigeOnlineAndroidApp/app/src/main/res/layout/message_item.xml" value="0.22826086956521738" />

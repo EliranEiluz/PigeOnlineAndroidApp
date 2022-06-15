@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:textSize="17dp"
         android:text="Hey Ben, how are you ?"
-        android:textColor="@color/black"
+        android:textColor="?colorAccent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:padding="10dp"

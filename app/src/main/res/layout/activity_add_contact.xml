@@ -31,7 +31,7 @@
             android:fontFamily="sans-serif"
             android:textStyle="bold"
             android:visibility="invisible"
-            android:textColor="@color/warning_red"/>
+            android:textColor="?colorOnError"/>
 
         <EditText
             android:id="@+id/contact_identifier"
@@ -43,8 +43,8 @@
             app:layout_constraintTop_toTopOf="parent"
             android:background="@drawable/text_login"
             android:padding="10dp"
-            android:textColorHint="@color/envelope_color"
-            android:textColor="@color/background_logo_color"
+            android:textColorHint="?colorSecondary"
+            android:textColor="?colorOnPrimary"
             />
         <EditText
             android:id="@+id/contact_display"
@@ -55,8 +55,8 @@
             android:padding="10dp"
             android:hint="Contact's display name"
             android:background="@drawable/text_login"
-            android:textColorHint="@color/envelope_color"
-            android:textColor="@color/background_logo_color"
+            android:textColorHint="?colorSecondary"
+            android:textColor="?colorOnPrimary"
             android:layout_marginBottom="25dp"/>
         <EditText
             android:id="@+id/contact_server"
@@ -68,8 +68,8 @@
             app:layout_constraintTop_toTopOf="parent"
             android:background="@drawable/text_login"
             android:padding="10dp"
-            android:textColorHint="@color/envelope_color"
-            android:textColor="@color/background_logo_color"
+            android:textColorHint="?colorSecondary"
+            android:textColor="?colorOnPrimary"
             />
 
             <Button

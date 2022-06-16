@@ -74,7 +74,7 @@ public class ChatActivity extends AppCompatActivity {
 
         this.messagesLV = findViewById(R.id.chat_messagesList);
         List<Message> messages = this.messagesViewModel.get().getValue();
-        final MessagesAdapter messagesAdapter = new MessagesAdapter(getApplicationContext(),
+        final MessagesAdapter messagesAdapter = new MessagesAdapter(this,
                 messages, this.username);
         this.messagesLV.setAdapter(messagesAdapter);
         this.messagesLV.setSelection(messagesAdapter.getCount() - 1);

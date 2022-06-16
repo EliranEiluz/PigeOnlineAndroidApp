@@ -132,7 +132,7 @@ public class RegisterActivity extends AppCompatActivity {
                 user.setImage(this.image);
             }
             else {
-                user.setImage("Image");
+                user.setImage("im3.jpg");
             }
             //user.setServerURL("");
             this.userAPI.postUser(user, this);

@@ -59,10 +59,10 @@ public class ContactsActivity extends AppCompatActivity {
         this.token = intent.getExtras().getString("token");
         String appToken = intent.getExtras().getString("appToken");
         this.contactsViewModel = new ViewModelProvider(this, new ContactsViewModelFactory
-                (this.username, getApplicationContext(), this.token, appToken, this.defaultServer)).get(ContactsViewModel.class);
+                (this.username, this, this.token, appToken, this.defaultServer)).get(ContactsViewModel.class);
         this.contactsListView = findViewById(R.id.contacts_chatsList);
         List<Chat> chats = this.contactsViewModel.get().getValue();
-        final ContactsAdapter contactsAdapter = new ContactsAdapter(getApplicationContext(), chats);
+        final ContactsAdapter contactsAdapter = new ContactsAdapter(this, chats);
         this.contactsListView.setAdapter(contactsAdapter);
 
         Button addBtn = findViewById(R.id.contacts_btn);

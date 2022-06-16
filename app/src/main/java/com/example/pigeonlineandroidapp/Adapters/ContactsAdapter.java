@@ -43,7 +43,7 @@ public class ContactsAdapter extends ArrayAdapter<Chat> {
         Chat chat = getItem(position);
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.contact_item, parent, false);
-        }
+       }
         TextView displayName = convertView.findViewById(R.id.contact_item_displayName);
         displayName.setText(chat.getDisplayName());
 

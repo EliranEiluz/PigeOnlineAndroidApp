@@ -27,8 +27,16 @@ public class RegisterActivity extends AppCompatActivity {
         System.out.println("onCreate REGISTER");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        this.defaultServer = this.getString(R.string.BaseUrl);
         Intent intentSrv = getIntent();
-        this.defaultServer = intentSrv.getExtras().getString("defaultServer");
+        Bundle extras = intentSrv.getExtras();
+        if (extras != null) {
+            if (extras.containsKey("defaultServer")) {
+                this.defaultServer = intentSrv.getExtras().getString("defaultServer");
+            }
+        }
+
         this.userAPI = new UserAPI(this.getApplicationContext(), this.defaultServer);
         FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(
                 RegisterActivity.this, instanceIdResult -> {
@@ -108,6 +116,7 @@ public class RegisterActivity extends AppCompatActivity {
             intent.putExtra("appToken", appToken);
             intent.putExtra("defaultServer", this.defaultServer);
             startActivity(intent);
+            finish();
         }
         else {
             TextView warningMessage = findViewById(R.id.register_warning_message);

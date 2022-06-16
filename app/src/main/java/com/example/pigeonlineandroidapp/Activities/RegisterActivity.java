@@ -1,26 +1,38 @@
 package com.example.pigeonlineandroidapp.Activities;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Base64;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.pigeonlineandroidapp.API.UserAPI;
 import com.example.pigeonlineandroidapp.R;
 import com.example.pigeonlineandroidapp.entities.User;
 import com.google.firebase.iid.FirebaseInstanceId;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.regex.Pattern;
 
 public class RegisterActivity extends AppCompatActivity {
     private UserAPI userAPI;
     private String appToken;
     private String defaultServer;
+    private ActivityResultLauncher<Intent> resultLauncher;
+    private String image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +59,36 @@ public class RegisterActivity extends AppCompatActivity {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         });
+        this.resultLauncher =
+                registerForActivityResult(
+                        new ActivityResultContracts.StartActivityForResult(), result -> {
+                            if (result.getResultCode() == RESULT_OK && result.getData()!= null) {
+                                Intent data = result.getData();
+                                if(data.getData() != null) {
+                                    Uri uri = (Uri) data.getData();
+                                    Bitmap bitmap;
+                                    try {
+                                        bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
+                                        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+                                        byte[] b = byteArrayOutputStream.toByteArray();
+                                        this.image = Base64.encodeToString(b, Base64.DEFAULT);
+                                    }
+                                    catch(IOException e) {
+                                        Toast.makeText(this,"Unable to upload image", Toast.LENGTH_LONG).show();
+                                    }
 
+                                }
+                            }
+                        });
+        Button addImageBtn = findViewById(R.id.register_addImage);
+        addImageBtn.setOnClickListener( view -> {
+                    Intent imagePickerIntent = new Intent(Intent.ACTION_PICK,
+                            MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    imagePickerIntent.setType("image/*");
+                    resultLauncher.launch(imagePickerIntent);
+                }
+                );
         Button registerBtn = findViewById(R.id.register_register_btn);
         registerBtn.setOnClickListener(view -> {
             TextView warningMessage = findViewById(R.id.register_warning_message);

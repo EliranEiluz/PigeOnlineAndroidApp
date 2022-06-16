@@ -92,6 +92,7 @@ public class ContactsActivity extends AppCompatActivity {
                 intent.putExtra("contactDisplayName", contactsAdapter.getItem(position).getDisplayName());
                 intent.putExtra("chatId", contactsAdapter.getItem(position).getId());
                 intent.putExtra("server", contactsAdapter.getItem(position).getServerURL());
+                intent.putExtra("chatImg", contactsAdapter.getItem(position).getImage());
                 intent.putExtra("token", token);
                 intent.putExtra("defaultServer", defaultServer);
                 lastPressedChat = contactsAdapter.getItem(position).getId();

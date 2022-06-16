@@ -1,6 +1,9 @@
 package com.example.pigeonlineandroidapp.Adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +19,7 @@ import androidx.lifecycle.LiveData;
 import com.example.pigeonlineandroidapp.R;
 import com.example.pigeonlineandroidapp.entities.Chat;
 
+import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 public class ContactsAdapter extends ArrayAdapter<Chat> {
@@ -53,6 +57,16 @@ public class ContactsAdapter extends ArrayAdapter<Chat> {
 
         TextView lastMessage = convertView.findViewById(R.id.contact_item_lastMessage);
         lastMessage.setText(chat.getLastMessage());
+
+        ImageView imgContact = convertView.findViewById(R.id.contact_item_image);
+
+        if (!chat.getImage().equals("im3.jpg")) {
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            byte[] imageBytes = byteArrayOutputStream.toByteArray();
+            imageBytes = Base64.decode(chat.getImage(), Base64.DEFAULT);
+            Bitmap decodedImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
+            imgContact.setImageBitmap(decodedImage);
+        }
 
         return convertView;
     }

@@ -7,10 +7,14 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.text.format.DateUtils;
+import android.util.Base64;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -20,6 +24,7 @@ import com.example.pigeonlineandroidapp.entities.Message;
 import com.example.pigeonlineandroidapp.viewModels.MessagesViewModel;
 import com.example.pigeonlineandroidapp.viewModels.MessagesViewModelFactory;
 
+import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -62,6 +67,17 @@ public class ChatActivity extends AppCompatActivity {
 
         TextView displayNameTV = findViewById(R.id.chat_displayName);
         displayNameTV.setText(contactDisplayName);
+
+        String imgStr = intent.getExtras().getString("chatImg");
+        ImageView imgChat = findViewById(R.id.chat_image);
+        if (!imgStr.equals("im3.jpg")) {
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            byte[] imageBytes = byteArrayOutputStream.toByteArray();
+            imageBytes = Base64.decode(imgStr, Base64.DEFAULT);
+            Bitmap decodedImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
+            imgChat.setImageBitmap(decodedImage);
+        }
+
 
         this.messagesViewModel = new ViewModelProvider(this, new MessagesViewModelFactory
                 (chatID, getApplicationContext(), token, contactUsername, this.username, this.defaultServer)).get(MessagesViewModel.class);

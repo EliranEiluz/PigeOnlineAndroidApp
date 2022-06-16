@@ -32,7 +32,7 @@ public class RegisterActivity extends AppCompatActivity {
     private String appToken;
     private String defaultServer;
     private ActivityResultLauncher<Intent> resultLauncher;
-    private String image;
+    private String image = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,7 +128,12 @@ public class RegisterActivity extends AppCompatActivity {
             user.setUsername(userName.getText().toString());
             user.setPassword(password.getText().toString());
             user.setDisplayName(displayName.getText().toString());
-            user.setImage("Image");
+            if(this.image != null) {
+                user.setImage(this.image);
+            }
+            else {
+                user.setImage("Image");
+            }
             //user.setServerURL("");
             this.userAPI.postUser(user, this);
             // Check Img.

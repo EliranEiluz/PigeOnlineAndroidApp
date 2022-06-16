@@ -132,7 +132,7 @@ public class ContactsRepository {
         new Thread(() -> {this.chatsDao.insert(chat);}).start();
         List<Chat> chats = this.chatListData.getValue();
         for(Chat c : chats) {
-            if(c.getId() == chat.getId()) {
+            if(c.getChatWith().equals(chat.getChatWith())) {
                 c.setDate(chat.getDate());
                 c.setLastMessage(chat.getLastMessage());
             }

@@ -124,5 +124,6 @@ public class ContactsActivity extends AppCompatActivity {
         super.onBackPressed();
         UserAPI api = new UserAPI(this.getApplicationContext(), this.defaultServer);
         api.declareOffline(this.username);
+        finish();
     }
 }

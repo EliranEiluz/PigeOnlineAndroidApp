@@ -55,18 +55,18 @@ public class ChatsAPI {
 
 
     public void post(PostContactParams postContactParams, ContactsRepository contactsRepository, String username, AddContactActivity addContactActivity) {
-        Call<Void> postContactCall = serviceAPI.postChat(postContactParams, this.token);
-        postContactCall.enqueue(new Callback<Void>() {
+        Call<String> postContactCall = serviceAPI.postChat(postContactParams, this.token);
+        postContactCall.enqueue(new Callback<String>() {
             @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
+            public void onResponse(Call<String> call, Response<String> response) {
                 contactsRepository.postChatHandler(response.code(), postContactParams.getId(),
-                        postContactParams.getName(), postContactParams.getServer(), username, addContactActivity);
+                        postContactParams.getName(), postContactParams.getServer(), username, addContactActivity, response.body());
             }
 
             @Override
-            public void onFailure(Call<Void> call, Throwable t) {
+            public void onFailure(Call<String> call, Throwable t) {
                 contactsRepository.postChatHandler(0, postContactParams.getId(),
-                        postContactParams.getName(), postContactParams.getServer(), username, addContactActivity);
+                        postContactParams.getName(), postContactParams.getServer(), username, addContactActivity, null);
             }
         });
 

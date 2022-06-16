@@ -70,9 +70,10 @@ public class ContactsRepository {
 
     }
 
-    public void postChatHandler(int responseCode, String to, String name, String server, String from, AddContactActivity addContactActivity) {
+    public void postChatHandler(int responseCode, String to, String name, String server, String from, AddContactActivity addContactActivity, String image) {
         if(responseCode == 201) {
             Chat chat = new Chat(to, name, server, from);
+            chat.setImage(image);
             List<Chat> tempList = this.chatListData.getValue();
             tempList.add(chat);
             this.chatListData.setValue(tempList);

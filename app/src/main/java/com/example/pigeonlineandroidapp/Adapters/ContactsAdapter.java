@@ -41,6 +41,7 @@ public class ContactsAdapter extends ArrayAdapter<Chat> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         Chat chat = getItem(position);
+
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.contact_item, parent, false);
        }

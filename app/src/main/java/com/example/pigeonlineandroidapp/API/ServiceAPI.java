@@ -18,7 +18,7 @@ public interface ServiceAPI {
     Call<List<Chat>> getChats(@Header("Authorization") String auth);
 
     @POST("/api/contacts")
-    Call<Void> postChat(@Body PostContactParams params, @Header("Authorization") String auth);
+    Call<String> postChat(@Body PostContactParams params, @Header("Authorization") String auth);
 
     @POST("/api/Users/Login")
     Call<User> Login(@Body UserValidation userValidation);

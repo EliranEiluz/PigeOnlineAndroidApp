@@ -3,7 +3,6 @@ package com.example.pigeonlineandroidapp.Activities;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -17,16 +16,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.pigeonlineandroidapp.API.UserAPI;
 import com.example.pigeonlineandroidapp.R;
 import com.example.pigeonlineandroidapp.entities.User;
 import com.google.firebase.iid.FirebaseInstanceId;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.regex.Pattern;
 
+/*
+ * Register Activity - for register with new user.
+ */
 public class RegisterActivity extends AppCompatActivity {
     private UserAPI userAPI;
     private String appToken;
@@ -36,13 +36,13 @@ public class RegisterActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        System.out.println("onCreate REGISTER");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
         this.defaultServer = this.getString(R.string.BaseUrl);
         Intent intentSrv = getIntent();
         Bundle extras = intentSrv.getExtras();
+        // Take default server from Login (Main) activity.
         if (extras != null) {
             if (extras.containsKey("defaultServer")) {
                 this.defaultServer = intentSrv.getExtras().getString("defaultServer");
@@ -54,11 +54,13 @@ public class RegisterActivity extends AppCompatActivity {
                 RegisterActivity.this, instanceIdResult -> {
                     this.appToken = instanceIdResult.getToken();
                 });
+
         Button loginBtn = findViewById(R.id.register_login_btn);
         loginBtn.setOnClickListener(view -> {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         });
+
         this.resultLauncher =
                 registerForActivityResult(
                         new ActivityResultContracts.StartActivityForResult(), result -> {
@@ -81,6 +83,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 }
                             }
                         });
+
         Button addImageBtn = findViewById(R.id.register_addImage);
         addImageBtn.setOnClickListener( view -> {
                     Intent imagePickerIntent = new Intent(Intent.ACTION_PICK,
@@ -89,6 +92,7 @@ public class RegisterActivity extends AppCompatActivity {
                     resultLauncher.launch(imagePickerIntent);
                 }
                 );
+
         Button registerBtn = findViewById(R.id.register_register_btn);
         registerBtn.setOnClickListener(view -> {
             TextView warningMessage = findViewById(R.id.register_warning_message);
@@ -134,16 +138,12 @@ public class RegisterActivity extends AppCompatActivity {
             else {
                 user.setImage("im3.jpg");
             }
-            //user.setServerURL("");
             this.userAPI.postUser(user, this);
-            // Check Img.
-
-
         });
-
 
     }
 
+    // Handle success of postUser in userAPI.
     public void handleRegisterResponse(int responseCode, String token, String username) {
         if(responseCode == 200) {
             EditText userNameET = findViewById(R.id.register_username);

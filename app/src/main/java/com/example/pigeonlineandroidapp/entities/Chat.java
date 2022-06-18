@@ -2,9 +2,7 @@ package com.example.pigeonlineandroidapp.entities;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
-
 import com.example.pigeonlineandroidapp.R;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,12 +13,12 @@ public class Chat {
     private int id;
 
     private String chatWith;
-
     private String lastMessage;
-
     private String date;
-
     private String displayName;
+    private String image;
+    private String serverURL;
+    private String chatOwner;
 
     public int getId() {
         return id;
@@ -85,12 +83,6 @@ public class Chat {
     public void setChatOwner(String chatOwner) {
         this.chatOwner = chatOwner;
     }
-
-    private String image;
-
-    private String serverURL;
-
-    private String chatOwner;
 
     public Chat(String chatWith, String displayName, String serverURL, String chatOwner) {
         this.chatWith = chatWith;

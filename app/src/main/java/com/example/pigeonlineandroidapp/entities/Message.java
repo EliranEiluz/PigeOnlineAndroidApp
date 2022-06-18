@@ -10,15 +10,10 @@ public class Message {
     private int id;
 
     private String from;
-
     private String content;
-
     private String type;
-
     private String date;
-
     private String senderPicture;
-
     private int chatOwnerId;
 
     public int getId() {

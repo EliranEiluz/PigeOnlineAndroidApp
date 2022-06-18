@@ -1,12 +1,9 @@
 package com.example.pigeonlineandroidapp.API;
 
 import android.content.Context;
-
 import com.example.pigeonlineandroidapp.Activities.MainActivity;
 import com.example.pigeonlineandroidapp.Activities.RegisterActivity;
 import com.example.pigeonlineandroidapp.entities.User;
-
-
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -16,6 +13,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
+// Api for user requests.
 public class UserAPI {
     private Retrofit retrofit;
     private ServiceAPI serviceAPI;
@@ -30,6 +28,7 @@ public class UserAPI {
         this.serviceAPI = retrofit.create(ServiceAPI.class);
     }
 
+    // postUser - register request.
     public void postUser(User user, RegisterActivity registerActivity) {
         Call<String> postUserCall = serviceAPI.postUser(user);
         postUserCall.enqueue(new Callback<String>() {
@@ -37,7 +36,6 @@ public class UserAPI {
             public void onResponse(Call<String> call, Response<String> response) {
                 registerActivity.handleRegisterResponse(response.code(), response.body(), user.getUsername());
             }
-
             @Override
             public void onFailure(Call<String> call, Throwable t) {
                 registerActivity.handleRegisterResponse(0, null, null);
@@ -45,6 +43,7 @@ public class UserAPI {
         });
     }
 
+    // Login request.
     public void Login(String username, String password, MainActivity mainActivity) {
         UserValidation userValidation = new UserValidation();
         userValidation.setUsername(username);
@@ -55,7 +54,6 @@ public class UserAPI {
             public void onResponse(Call<User> call, Response<User> response) {
                 mainActivity.handleLoginResponse(response.body(), response.code(), username);
             }
-
             @Override
             public void onFailure(Call<User> call, Throwable t) {
                 mainActivity.handleLoginResponse(null, 0, null);
@@ -63,17 +61,15 @@ public class UserAPI {
         });
     }
 
+    // Logout request.
     public void declareOffline(String username) {
         Call<Void> offlineCall = this.serviceAPI.offline(username);
         offlineCall.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
-
             }
-
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-
             }
         });
     }

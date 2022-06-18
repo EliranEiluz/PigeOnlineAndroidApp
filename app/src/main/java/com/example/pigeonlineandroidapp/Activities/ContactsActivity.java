@@ -2,7 +2,6 @@ package com.example.pigeonlineandroidapp.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -12,7 +11,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
-
 import com.example.pigeonlineandroidapp.API.ServiceAPI;
 import com.example.pigeonlineandroidapp.API.UserAPI;
 import com.example.pigeonlineandroidapp.Adapters.ContactsAdapter;
@@ -21,13 +19,13 @@ import com.example.pigeonlineandroidapp.entities.Chat;
 import com.example.pigeonlineandroidapp.entities.Message;
 import com.example.pigeonlineandroidapp.viewModels.ContactsViewModel;
 import com.example.pigeonlineandroidapp.viewModels.ContactsViewModelFactory;
-
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+ * Contacts Activity - chats screen.
+ */
 public class ContactsActivity extends AppCompatActivity {
-
-
     private ContactsViewModel contactsViewModel;
     private String username;
     private ListView contactsListView;
@@ -49,9 +47,9 @@ public class ContactsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        System.out.println("onCreate CONTACTS");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contacts);
+
         Intent intent = getIntent();
         this.lastPressedChat = -1;
         this.defaultServer = intent.getExtras().getString("defaultServer");
@@ -61,6 +59,7 @@ public class ContactsActivity extends AppCompatActivity {
         this.contactsViewModel = new ViewModelProvider(this, new ContactsViewModelFactory
                 (this.username, this, this.token, appToken, this.defaultServer)).get(ContactsViewModel.class);
         this.contactsListView = findViewById(R.id.contacts_chatsList);
+
         List<Chat> chats = this.contactsViewModel.get().getValue();
         final ContactsAdapter contactsAdapter = new ContactsAdapter(this, chats);
         this.contactsListView.setAdapter(contactsAdapter);
@@ -74,6 +73,7 @@ public class ContactsActivity extends AppCompatActivity {
                     identifiersLst.add(chat.getChatWith());
                 }
             }
+            // Put the identifiers of the contacts - for check if the contact already exist.
             intentAdd.putExtra("identifiers_list", identifiersLst);
             intentAdd.putExtra("username", this.username);
             intentAdd.putExtra("token", this.token);
@@ -102,13 +102,13 @@ public class ContactsActivity extends AppCompatActivity {
 
         this.contactsViewModel.get().observe(this, contacts -> {
             contactsAdapter.setData(contacts);
-            //contactsAdapter.notifyDataSetChanged();
         });
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        // On back from chat - update details in contacts screen.
         if(this.lastPressedChat != -1) {
             super.onResume();
             this.contactsViewModel.updateChat(this.lastPressedChat);
@@ -124,6 +124,7 @@ public class ContactsActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         UserAPI api = new UserAPI(this.getApplicationContext(), this.defaultServer);
+        // Logout.
         api.declareOffline(this.username);
         finish();
     }

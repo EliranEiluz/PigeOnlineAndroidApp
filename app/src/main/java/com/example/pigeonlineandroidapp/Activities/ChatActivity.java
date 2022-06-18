@@ -2,7 +2,6 @@ package com.example.pigeonlineandroidapp.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -17,18 +16,19 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import com.example.pigeonlineandroidapp.Adapters.MessagesAdapter;
 import com.example.pigeonlineandroidapp.R;
 import com.example.pigeonlineandroidapp.entities.Message;
 import com.example.pigeonlineandroidapp.viewModels.MessagesViewModel;
 import com.example.pigeonlineandroidapp.viewModels.MessagesViewModelFactory;
-
 import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+/*
+ * Chat Activity - Specific chat screen.
+ */
 public class ChatActivity extends AppCompatActivity {
     private MessagesViewModel messagesViewModel;
     private ListView messagesLV;
@@ -51,6 +51,7 @@ public class ChatActivity extends AppCompatActivity {
             }
         }
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,9 +66,9 @@ public class ChatActivity extends AppCompatActivity {
         String contactDisplayName = intent.getExtras().getString("contactDisplayName");
         int chatID = intent.getExtras().getInt("chatId");
 
+        // Set display name and image of the contact (in the current chat).
         TextView displayNameTV = findViewById(R.id.chat_displayName);
         displayNameTV.setText(contactDisplayName);
-
         String imgStr = intent.getExtras().getString("chatImg");
         ImageView imgChat = findViewById(R.id.chat_image);
         if (!imgStr.equals("im3.jpg")) {
@@ -78,21 +79,15 @@ public class ChatActivity extends AppCompatActivity {
             imgChat.setImageBitmap(decodedImage);
         }
 
-
         this.messagesViewModel = new ViewModelProvider(this, new MessagesViewModelFactory
                 (chatID, getApplicationContext(), token, contactUsername, this.username, this.defaultServer)).get(MessagesViewModel.class);
-
-        /*
-        // set the chatId and the contact in the repository when push contact.
-        messagesViewModel.setNewChat(chatID);
-        messagesViewModel.setContact(contactUsername);
-         */
 
         this.messagesLV = findViewById(R.id.chat_messagesList);
         List<Message> messages = this.messagesViewModel.get().getValue();
         final MessagesAdapter messagesAdapter = new MessagesAdapter(this,
                 messages, this.username);
         this.messagesLV.setAdapter(messagesAdapter);
+        // Scroll to bottom.
         this.messagesLV.setSelection(messagesAdapter.getCount() - 1);
 
         Button sendBtn = findViewById(R.id.send_button);
@@ -107,13 +102,14 @@ public class ChatActivity extends AppCompatActivity {
                     messageEt.getText().toString(),
                     formatter.format(date), chatID, "text"), this.contactServer);
             messageEt.setText("");
+            // Scroll to bottom.
             this.messagesLV.setSelection(messagesAdapter.getCount() - 1);
         });
 
         this.messagesViewModel.get().observe(this, allMessages -> {
             messagesAdapter.setData(allMessages);
+            // Scroll to bottom.
             this.messagesLV.setSelection(messagesAdapter.getCount() - 1);
-            //messagesAdapter.notifyDataSetChanged();
         });
 
     }

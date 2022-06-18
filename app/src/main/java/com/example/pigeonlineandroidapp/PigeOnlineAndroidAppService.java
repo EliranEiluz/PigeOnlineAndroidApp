@@ -6,25 +6,23 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.Build;
 import android.os.IBinder;
-
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
-
 import com.example.pigeonlineandroidapp.entities.Message;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+// Service for Firebase and Notifications.
 public class PigeOnlineAndroidAppService extends FirebaseMessagingService {
     public PigeOnlineAndroidAppService() {
     }
 
     @Override
     public void onMessageReceived(@NonNull RemoteMessage message) {
-        //super.onMessageReceived(message);
+        // super.onMessageReceived(message);
         if (message.getNotification() != null) {
             createNotificationChannel();
             NotificationCompat.Builder builder = new NotificationCompat.

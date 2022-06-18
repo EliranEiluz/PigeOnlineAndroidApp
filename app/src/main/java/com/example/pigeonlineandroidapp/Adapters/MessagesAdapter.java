@@ -7,18 +7,15 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
-
 import com.example.pigeonlineandroidapp.R;
 import com.example.pigeonlineandroidapp.entities.Chat;
 import com.example.pigeonlineandroidapp.entities.Message;
-
 import java.util.List;
 
+// Adapter for messages listView.
 public class MessagesAdapter extends ArrayAdapter<Message> {
     LayoutInflater inflater;
     String currentUsr;
@@ -39,6 +36,7 @@ public class MessagesAdapter extends ArrayAdapter<Message> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         Message message = getItem(position);
+        // Set the layout by the sender.
         if(message.getFrom().equals(this.currentUsr)) {
             convertView = inflater.inflate(R.layout.rmessage_item, parent, false);
         } else {
@@ -46,7 +44,6 @@ public class MessagesAdapter extends ArrayAdapter<Message> {
         }
         TextView content = convertView.findViewById(R.id.message_content);
         content.setText(message.getContent());
-
         return convertView;
     }
 }

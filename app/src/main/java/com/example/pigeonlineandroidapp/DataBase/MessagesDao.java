@@ -8,7 +8,6 @@ import com.example.pigeonlineandroidapp.entities.Chat;
 import com.example.pigeonlineandroidapp.entities.Message;
 import java.util.List;
 
-
 @Dao
 public interface MessagesDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)

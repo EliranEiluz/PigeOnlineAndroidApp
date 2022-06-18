@@ -1,7 +1,6 @@
 package com.example.pigeonlineandroidapp.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -9,14 +8,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-
 import com.example.pigeonlineandroidapp.API.UserAPI;
 import com.example.pigeonlineandroidapp.R;
 import com.example.pigeonlineandroidapp.entities.User;
 import com.google.firebase.iid.FirebaseInstanceId;
 
+/*
+ * Main (Login) Activity - for login with exist user.
+ */
 public class MainActivity extends AppCompatActivity {
-
     private UserAPI userAPI;
     private String token;
     private String appToken = null;
@@ -24,21 +24,23 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        System.out.println("onCreate LOGIN");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         this.defaultServer = this.getString(R.string.BaseUrl);
         this.userAPI = new UserAPI(this.getApplicationContext(), this.defaultServer);
         FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(
                 MainActivity.this, instanceIdResult -> {
                     this.appToken = instanceIdResult.getToken();
                 });
+
         Button registerBtn = findViewById(R.id.main_register_btn);
         registerBtn.setOnClickListener(view -> {
             Intent intent = new Intent(this, RegisterActivity.class);
             intent.putExtra("defaultServer", this.defaultServer);
             startActivity(intent);
         });
+
         Button settingsBtn = findViewById(R.id.main_settings_btn);
         settingsBtn.setOnClickListener(view -> {
             Intent intent = new Intent(this, SettingsActivity.class);
@@ -63,8 +65,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    // Handle success of Login function in userAPI.
     public void handleLoginResponse(User user, int responseCode, String userName) {
         if(responseCode == 200) {
+            // The server return the token in the username field.
             this.token = user.getUsername();
         }
         else {
@@ -98,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
+        // Save default server from settings activity.
         if (extras != null) {
             if (extras.containsKey("defaultServer")) {
                 this.defaultServer = intent.getExtras().getString("defaultServer");

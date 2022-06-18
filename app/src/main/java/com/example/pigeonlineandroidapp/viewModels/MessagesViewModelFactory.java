@@ -1,11 +1,11 @@
 package com.example.pigeonlineandroidapp.viewModels;
-import android.content.Context;
 
+import android.content.Context;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import com.example.pigeonlineandroidapp.repos.MessagesRepository;
 
-
+// Factory for create Messages View Model (by singleton)
 public class MessagesViewModelFactory implements ViewModelProvider.Factory {
     private int chatID;
     private Context context;

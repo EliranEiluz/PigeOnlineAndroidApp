@@ -1,11 +1,11 @@
 package com.example.pigeonlineandroidapp.viewModels;
-import android.content.Context;
 
+import android.content.Context;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import com.example.pigeonlineandroidapp.repos.ContactsRepository;
 
-
+// Factory for create Contacts View Model (by singleton)
 public class ContactsViewModelFactory implements ViewModelProvider.Factory {
     private String username;
     private Context context;

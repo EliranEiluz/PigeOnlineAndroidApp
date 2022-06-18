@@ -2,26 +2,25 @@ package com.example.pigeonlineandroidapp.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-
 import com.example.pigeonlineandroidapp.R;
 import com.example.pigeonlineandroidapp.viewModels.ContactsViewModel;
 import com.example.pigeonlineandroidapp.viewModels.ContactsViewModelFactory;
-
 import java.util.ArrayList;
 
+/*
+ * Add Contact Activity - Specific chat screen.
+ */
 public class AddContactActivity extends AppCompatActivity {
     private ContactsViewModel contactsViewModel;
     private String username;
     private String token;
     private String defaultServer;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,12 +69,11 @@ public class AddContactActivity extends AppCompatActivity {
             this.contactsViewModel.add(username, identifier.getText().toString(),
                     server.getText().toString(),
                     displayName.getText().toString(), this);
-
-
         });
     }
 
-    public void hadnleSuccess() {
+    // If success to add the contact - return to contacts activity.
+    public void handleSuccess() {
         EditText identifierET = findViewById(R.id.contact_identifier);
         EditText displayET = findViewById(R.id.contact_display);
         EditText serverET = findViewById(R.id.contact_server);

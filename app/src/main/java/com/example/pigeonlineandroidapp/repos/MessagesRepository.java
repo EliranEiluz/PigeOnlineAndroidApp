@@ -107,8 +107,7 @@ public class MessagesRepository {
 
     // Get new message from the current contact (chat) - firebase.
     public void addMessageFromFireBase(Message message) {
-        // Add to room ?
-
+        new Thread(() -> {this.messagesDao.insert(message);}).start();
         List<Message> messages = this.messageListData.getValue();
         messages.add(message);
         this.messageListData.setValue(messages);

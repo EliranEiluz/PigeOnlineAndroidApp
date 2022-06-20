@@ -1,0 +1,2 @@
+# This project code was written by Ben Levi ID:318811304 and Eliran Eiluz ID:313268146
+# The repository contains the android project, but also the Asp.NET server and the react source code, as we made some changes in them to work also with android client. For more information about the server side and the React client side, Please read the code documantation or read the README of the previous projects. 
